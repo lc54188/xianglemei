@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="想了莓 - 你的专属情感治愈伴侣 🍓">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FF6B8A">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- iOS PWA 配置 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="想了莓">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  
+  <!-- iOS 启动画面 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Android 主题色 -->
+  <meta name="theme-color" content="#FF6B8A">
+  <meta name="msapplication-TileColor" content="#FF6B8A">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <title>想了莓 - 情感治愈伴侣</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* 加载动画样式 */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #FF6B8A 0%, #FF8FAB 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    .loading-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loading-logo {
+      font-size: 64px;
+      animation: bounce 1s infinite;
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 24px;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+    
+    .loading-subtitle {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    /* PWA 安装提示按钮样式 */
+    .pwa-install-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 16px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 10000;
+      animation: slideUp 0.3s ease-out;
+      max-width: 90%;
+      text-align: center;
+    }
+    
+    .pwa-install-banner.show {
+      display: block;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+    
+    .pwa-install-banner .title {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    
+    .pwa-install-banner .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    
+    .pwa-install-banner .btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .pwa-install-banner .btn-install {
+      background: #FF6B8A;
+      color: white;
+    }
+    
+    .pwa-install-banner .btn-dismiss {
+      background: #f0f0f0;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <!-- 加载动画 -->
+  <div class="loading-container" id="loading">
+    <div class="loading-logo">🍓</div>
+    <div class="loading-text">想了莓</div>
+    <div class="loading-subtitle">正在启动...</div>
+  </div>
+
+  <!-- PWA 安装提示 -->
+  <div class="pwa-install-banner" id="pwaBanner">
+    <div class="title">📱 添加到桌面</div>
+    <div style="color: #666; font-size: 13px;">将想了莓添加到手机桌面，快速访问</div>
+    <div class="buttons">
+      <button class="btn btn-install" id="btnInstall">立即添加</button>
+      <button class="btn btn-dismiss" id="btnDismiss">稍后</button>
+    </div>
+  </div>
+
+  <script>
+    // Flutter 加载完成后隐藏加载动画
+    window.addEventListener('flutter-first-frame', function() {
+      const loading = document.getElementById('loading');
+      if (loading) {
+        loading.classList.add('hidden');
+        setTimeout(() => loading.remove(), 500);
+      }
+    });
+
+    // PWA BeforeInstallPrompt 事件处理
+    let deferredPrompt = null;
+    const pwaBanner = document.getElementById('pwaBanner');
+    const btnInstall = document.getElementById('btnInstall');
+    const btnDismiss = document.getElementById('btnDismiss');
+
+    window.addEventListener('beforeinstallprompt', function(e) {
+      console.log('beforeinstallprompt triggered');
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // 存储到 sessionStorage 以便 Flutter 访问
+      sessionStorage.setItem('pwa_deferred_prompt', 'true');
+      
+      // 显示安装提示
+      setTimeout(() => {
+        if (pwaBanner) {
+          pwaBanner.classList.add('show');
+        }
+      }, 3000); // 3秒后显示
+    });
+
+    // 点击安装按钮
+    if (btnInstall) {
+      btnInstall.addEventListener('click', async function() {
+        if (!deferredPrompt) {
+          // 如果没有 deferredPrompt，尝试触发浏览器安装
+          alert('请在浏览器菜单中选择"添加到主屏幕"或"安装应用"');
+          return;
+        }
+        
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('User choice:', outcome);
+        
+        if (outcome === 'accepted') {
+          pwaBanner.classList.remove('show');
+        }
+        deferredPrompt = null;
+        sessionStorage.removeItem('pwa_deferred_prompt');
+      });
+    }
+
+    // 关闭提示
+    if (btnDismiss) {
+      btnDismiss.addEventListener('click', function() {
+        pwaBanner.classList.remove('show');
+        sessionStorage.setItem('pwa_dismissed', 'true');
+      });
+    }
+
+    // 应用已安装时隐藏提示
+    window.addEventListener('appinstalled', function() {
+      console.log('App installed!');
+      pwaBanner.classList.remove('show');
+      sessionStorage.removeItem('pwa_deferred_prompt');
+    });
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
