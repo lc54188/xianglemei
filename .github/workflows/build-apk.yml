@@ -66,7 +66,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
-          name: 馃崜 鎯充簡鑾?APK v${{ github.run_number }}
+          name: 🍓 想了莓 APK v${{ github.run_number }}
           draft: false
           prerelease: false
         env:
