@@ -1,0 +1,73 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clone submodules
+        run: |
+          if [ -f .gitmodules ]; then
+            git submodule update --init --recursive
+          fi
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: 'stable'
+          cache: true
+
+      - name: Add Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Create Android platform
+        run: flutter create --platforms=android --org=com.xianglemei --project-name=xianglemei . 2>/dev/null || true
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Build release APK
+        run: flutter build apk --release --no-tree-shake-icons
+
+      - name: Copy icons for Android
+        run: |
+          mkdir -p android/app/src/main/res/mipmap-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}
+          cp web/icons/Icon-192.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+          cp web/icons/Icon-192.png android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+          cp web/icons/Icon-192.png android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+          cp web/icons/Icon-192.png android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+          cp web/icons/Icon-192.png android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+          flutter build apk --release --no-tree-shake-icons
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: xianglemei-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/app-release.apk
+          name: 馃崜 鎯充簡鑾?APK v${{ github.run_number }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
