@@ -5,5 +5,8 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.2.2
   url_launcher: ^6.3.1
+environment:
+  sdk: '^3.5.0'
+
 flutter:
   uses-material-design: true
