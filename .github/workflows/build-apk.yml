@@ -39,7 +39,6 @@ jobs:
         run: |
           flutter create --platforms=android --org=com.xianglemei --project-name=xianglemei .
           echo "=== Android platform created ==="
-          ls android/app/build.gradle 2>/dev/null || echo "WARNING: build.gradle not found!"
 
       - name: Build debug APK
         run: |
@@ -51,11 +50,11 @@ jobs:
             ls -la build/app/outputs/flutter-apk/
           else
             echo "DEBUG_BUILD_FAILED"
-            echo "=== Last 50 lines of log ==="
-            tail -50 debug_build.log
+            echo "=== Last 80 lines of log ==="
+            tail -80 debug_build.log
           fi
 
-      - name: Save build log on failure
+      - name: Save build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -64,11 +63,15 @@ jobs:
           retention-days: 7
 
       - name: Build release APK
-        if: always() && fileExists('build/app/outputs/flutter-apk/app-debug.apk')
-        run: flutter build apk --release --no-tree-shake-icons
+        if: success()
+        run: |
+          if [ -f build/app/outputs/flutter-apk/app-debug.apk ]; then
+            flutter build apk --release --no-tree-shake-icons
+          else
+            echo "SKIP: debug APK not found"
+          fi
 
       - name: Copy icons for Android
-        if: always()
         run: |
           mkdir -p android/app/src/main/res/mipmap-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}
           cp web/icons/Icon-192.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png 2>/dev/null || true
@@ -79,7 +82,7 @@ jobs:
           flutter build apk --release --no-tree-shake-icons
 
       - name: Upload release APK
-        if: always() && fileExists('build/app/outputs/flutter-apk/app-release.apk')
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: xianglemei-apk
