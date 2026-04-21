@@ -1,12 +1,11 @@
 name: xianglemei
-description: 想了莓 - 你的专属情对学停势停 下域或
+description: 想了莓 - 你的专属情感治愈伴侣 🍓
+environment:
+  sdk: ">=2.19.0 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.2.2
   url_launcher: ^6.3.1
-environment:
-  sdk: '^3.5.0'
-
 flutter:
   uses-material-design: true
