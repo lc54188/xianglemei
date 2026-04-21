@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:url_launcher/url_launcher.dart';
 
-// ==================== 应用入口 ====================
+// ==================== 搴旂敤鍏ュ彛 ====================
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // 初始化存储服务
-  await StorageService.init();
+  // 鍒濆鍖栧瓨鍌ㄦ湇鍔?  await StorageService.init();
   runApp(const XiangLeMeiApp());
 }
 
-// ==================== 存储服务 ====================
+// ==================== 瀛樺偍鏈嶅姟 ====================
 class StorageService {
   static late SharedPreferences _prefs;
   
@@ -20,7 +19,7 @@ class StorageService {
     _prefs = await SharedPreferences.getInstance();
   }
   
-  // 键名常量
+  // 閿悕甯搁噺
   static const String keyDarkMode = 'dark_mode';
   static const String keyUsername = 'username';
   static const String keyIsLoggedIn = 'is_logged_in';
@@ -28,40 +27,36 @@ class StorageService {
   static const String keyHealingDay = 'healing_day';
   static const String keyCurrentMood = 'current_mood';
   
-  // 深色模式
+  // 娣辫壊妯″紡
   static bool getDarkMode() => _prefs.getBool(keyDarkMode) ?? false;
   static Future<void> setDarkMode(bool value) => _prefs.setBool(keyDarkMode, value);
   
-  // 用户名
-  static String getUsername() => _prefs.getString(keyUsername) ?? '';
+  // 鐢ㄦ埛鍚?  static String getUsername() => _prefs.getString(keyUsername) ?? '';
   static Future<void> setUsername(String value) => _prefs.setString(keyUsername, value);
   
-  // 登录状态
-  static bool getIsLoggedIn() => _prefs.getBool(keyIsLoggedIn) ?? false;
+  // 鐧诲綍鐘舵€?  static bool getIsLoggedIn() => _prefs.getBool(keyIsLoggedIn) ?? false;
   static Future<void> setIsLoggedIn(bool value) => _prefs.setBool(keyIsLoggedIn, value);
   
-  // 莓籽数
-  static int getMeiSeeds() => _prefs.getInt(keyMeiSeeds) ?? 0;
+  // 鑾撶苯鏁?  static int getMeiSeeds() => _prefs.getInt(keyMeiSeeds) ?? 0;
   static Future<void> setMeiSeeds(int value) => _prefs.setInt(keyMeiSeeds, value);
   
-  // 治愈天数
+  // 娌绘剤澶╂暟
   static int getHealingDay() => _prefs.getInt(keyHealingDay) ?? 0;
   static Future<void> setHealingDay(int value) => _prefs.setInt(keyHealingDay, value);
   
-  // 当前心情
-  static String getCurrentMood() => _prefs.getString(keyCurrentMood) ?? '🍓';
+  // 褰撳墠蹇冩儏
+  static String getCurrentMood() => _prefs.getString(keyCurrentMood) ?? '馃崜';
   static Future<void> setCurrentMood(String value) => _prefs.setString(keyCurrentMood, value);
   
-  // 清除所有数据
-  static Future<void> clear() => _prefs.clear();
+  // 娓呴櫎鎵€鏈夋暟鎹?  static Future<void> clear() => _prefs.clear();
 }
 
-// ==================== 性能优化常量 ====================
-const bool kDebugOptimize = false; // 生产环境关闭调试
+// ==================== 鎬ц兘浼樺寲甯搁噺 ====================
+const bool kDebugOptimize = false; // 鐢熶骇鐜鍏抽棴璋冭瘯
 
-// ==================== 主题配置 ====================
+// ==================== 涓婚閰嶇疆 ====================
 class AppTheme {
-  // 品牌色系
+  // 鍝佺墝鑹茬郴
   static const Color primary = Color(0xFFFF6B8A);
   static const Color primaryLight = Color(0xFFFF8FAB);
   static const Color primaryDark = Color(0xFFE55A7A);
@@ -76,7 +71,7 @@ class AppTheme {
   static const Color greenAccent = Color(0xFF52C41A);
   static const Color goldAccent = Color(0xFFFFAA00);
 
-  // 深色模式色系
+  // 娣辫壊妯″紡鑹茬郴
   static const Color darkBackground = Color(0xFF1A1A2E);
   static const Color darkSurface = Color(0xFF252538);
   static const Color darkCardBg = Color(0xFF2D2D44);
@@ -84,7 +79,7 @@ class AppTheme {
   static const Color darkTextSecondary = Color(0xFFB0B0C0);
   static const Color darkSecondary = Color(0xFF4A4A6A);
   
-  // 安卓状态栏适配
+  // 瀹夊崜鐘舵€佹爮閫傞厤
   static SystemUiOverlayStyle get systemOverlayStyle => const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
@@ -99,13 +94,13 @@ class AppTheme {
     systemNavigationBarIconBrightness: Brightness.light,
   );
 
-  // 圆角常量
+  // 鍦嗚甯搁噺
   static const double radiusSmall = 8.0;
   static const double radiusMedium = 16.0;
   static const double radiusLarge = 24.0;
   static const double radiusXLarge = 32.0;
 
-  // 阴影样式
+  // 闃村奖鏍峰紡
   static List<BoxShadow> get cardShadow => [
     BoxShadow(
       color: primary.withOpacity(0.12),
@@ -122,10 +117,10 @@ class AppTheme {
     ),
   ];
 
-  // 亮色主题
+  // 浜壊涓婚
   static ThemeData get theme => _buildTheme(Brightness.light);
 
-  // 暗色主题
+  // 鏆楄壊涓婚
   static ThemeData get darkTheme => _buildTheme(Brightness.dark);
 
   static ThemeData _buildTheme(Brightness brightness) {
@@ -193,7 +188,7 @@ class AppTheme {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: card,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -238,7 +233,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusSmall)),
         behavior: SnackBarBehavior.floating,
       ),
-      dialogTheme: DialogThemeData(
+      dialogTheme: DialogTheme(
         backgroundColor: surfaceColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusLarge)),
       ),
@@ -276,31 +271,28 @@ class AppTheme {
   }
 }
 
-// ==================== 数据模型 ====================
+// ==================== 鏁版嵁妯″瀷 ====================
 class AppState extends ChangeNotifier {
   bool _isLoggedIn = false;
   String _username = '';
   int _meiSeeds = 0;
-  String _currentMood = '🍓';
+  String _currentMood = '馃崜';
   List<DiaryEntry> _diaries = [];
   List<String> _joinedGroups = [];
   int _healingDay = 0;
   List<String> _achievements = [];
-  bool _isDarkMode = false; // 深色模式状态
-  Map<String, bool> _farmItems = {
-    '草莓苗': true,
-    '小草莓': false,
-    '大草莓': false,
-    '草莓王': false,
+  bool _isDarkMode = false; // 娣辫壊妯″紡鐘舵€?  Map<String, bool> _farmItems = {
+    '鑽夎帗鑻?: true,
+    '灏忚崏鑾?: false,
+    '澶ц崏鑾?: false,
+    '鑽夎帗鐜?: false,
   };
 
-  // 构造函数：从存储加载数据
-  AppState() {
+  // 鏋勯€犲嚱鏁帮細浠庡瓨鍌ㄥ姞杞芥暟鎹?  AppState() {
     _loadFromStorage();
   }
 
-  // 从存储加载数据
-  void _loadFromStorage() {
+  // 浠庡瓨鍌ㄥ姞杞芥暟鎹?  void _loadFromStorage() {
     _isDarkMode = StorageService.getDarkMode();
     _isLoggedIn = StorageService.getIsLoggedIn();
     _username = StorageService.getUsername();
@@ -309,7 +301,7 @@ class AppState extends ChangeNotifier {
     _currentMood = StorageService.getCurrentMood();
   }
 
-  // 性能优化：getter直接返回，减少函数调用开销
+  // 鎬ц兘浼樺寲锛歡etter鐩存帴杩斿洖锛屽噺灏戝嚱鏁拌皟鐢ㄥ紑閿€
   bool get isLoggedIn => _isLoggedIn;
   String get username => _username;
   int get meiSeeds => _meiSeeds;
@@ -331,7 +323,7 @@ class AppState extends ChangeNotifier {
 
   void login(String name) {
     _isLoggedIn = true;
-    _username = name.isEmpty ? '莓莓用户' : name;
+    _username = name.isEmpty ? '鑾撹帗鐢ㄦ埛' : name;
     StorageService.setIsLoggedIn(true);
     StorageService.setUsername(_username);
     notifyListeners();
@@ -381,26 +373,26 @@ class AppState extends ChangeNotifier {
   }
 
   void _checkAchievements() {
-    if (_meiSeeds >= 50 && !_achievements.contains('莓籽收集者')) {
-      _achievements.add('莓籽收集者');
+    if (_meiSeeds >= 50 && !_achievements.contains('鑾撶苯鏀堕泦鑰?)) {
+      _achievements.add('鑾撶苯鏀堕泦鑰?);
     }
-    if (_meiSeeds >= 100 && !_achievements.contains('莓籽大师')) {
-      _achievements.add('莓籽大师');
+    if (_meiSeeds >= 100 && !_achievements.contains('鑾撶苯澶у笀')) {
+      _achievements.add('鑾撶苯澶у笀');
     }
-    if (_diaries.length >= 3 && !_achievements.contains('日记达人')) {
-      _achievements.add('日记达人');
+    if (_diaries.length >= 3 && !_achievements.contains('鏃ヨ杈句汉')) {
+      _achievements.add('鏃ヨ杈句汉');
     }
   }
 
   void _checkFarmGrowth() {
-    if (_healingDay >= 3 && !_farmItems['小草莓']!) {
-      _farmItems['小草莓'] = true;
+    if (_healingDay >= 3 && !_farmItems['灏忚崏鑾?]!) {
+      _farmItems['灏忚崏鑾?] = true;
     }
-    if (_healingDay >= 7 && !_farmItems['大草莓']!) {
-      _farmItems['大草莓'] = true;
+    if (_healingDay >= 7 && !_farmItems['澶ц崏鑾?]!) {
+      _farmItems['澶ц崏鑾?] = true;
     }
-    if (_healingDay >= 21 && !_farmItems['草莓王']!) {
-      _farmItems['草莓王'] = true;
+    if (_healingDay >= 21 && !_farmItems['鑽夎帗鐜?]!) {
+      _farmItems['鑽夎帗鐜?] = true;
     }
   }
 }
@@ -419,10 +411,10 @@ class DiaryEntry {
   });
 }
 
-// ==================== 全局状态单例 ====================
+// ==================== 鍏ㄥ眬鐘舵€佸崟渚?====================
 final AppState _globalState = AppState();
 
-// ==================== 页面过渡动画 ====================
+// ==================== 椤甸潰杩囨浮鍔ㄧ敾 ====================
 class FadePageRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
   FadePageRoute({required this.page})
@@ -448,7 +440,7 @@ class FadePageRoute<T> extends PageRouteBuilder<T> {
         );
 }
 
-// ==================== 主应用 ====================
+// ==================== 涓诲簲鐢?====================
 class XiangLeMeiApp extends StatelessWidget {
   const XiangLeMeiApp({super.key});
 
@@ -459,28 +451,27 @@ class XiangLeMeiApp extends StatelessWidget {
       builder: (context, _) {
         final isDark = _globalState.isDarkMode;
         return MaterialApp(
-          title: '想了莓',
+          title: '鎯充簡鑾?,
           theme: AppTheme.theme,
           darkTheme: AppTheme.darkTheme,
           themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
           debugShowCheckedModeBanner: false,
-          // 全局页面过渡动画
+          // 鍏ㄥ眬椤甸潰杩囨浮鍔ㄧ敾
           builder: (context, child) {
-            // 横竖屏适配：响应式布局
+            // 妯珫灞忛€傞厤锛氬搷搴斿紡甯冨眬
             return OrientationBuilder(
               builder: (context, orientation) {
-                // 根据屏幕方向调整UI
+                // 鏍规嵁灞忓箷鏂瑰悜璋冩暣UI
                 final isLandscape = orientation == Orientation.landscape;
                 final screenSize = MediaQuery.of(context).size;
                 final isTablet = screenSize.shortestSide >= 600;
                 
-                // 设置系统UI样式
+                // 璁剧疆绯荤粺UI鏍峰紡
                 SystemChrome.setSystemUIOverlayStyle(
                   isDark ? AppTheme.darkSystemOverlayStyle : AppTheme.systemOverlayStyle,
                 );
                 
-                // 允许横竖屏切换
-                SystemChrome.setPreferredOrientations([
+                // 鍏佽妯珫灞忓垏鎹?                SystemChrome.setPreferredOrientations([
                   DeviceOrientation.portraitUp,
                   DeviceOrientation.portraitDown,
                   DeviceOrientation.landscapeLeft,
@@ -498,7 +489,7 @@ class XiangLeMeiApp extends StatelessWidget {
   }
 }
 
-// 性能优化：独立的认证路由组件
+// 鎬ц兘浼樺寲锛氱嫭绔嬬殑璁よ瘉璺敱缁勪欢
 class _AuthRouter extends StatelessWidget {
   const _AuthRouter();
 
@@ -515,7 +506,7 @@ class _AuthRouter extends StatelessWidget {
   }
 }
 
-// ==================== 引导页 ====================
+// ==================== 寮曞椤?====================
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -531,33 +522,33 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   final List<_OnboardingPageData> _pages = const [
     _OnboardingPageData(
-      icon: '🍓',
-      title: '欢迎来到想了莓',
-      subtitle: '一个属于你的情感治愈小宇宙',
+      icon: '馃崜',
+      title: '娆㈣繋鏉ュ埌鎯充簡鑾?,
+      subtitle: '涓€涓睘浜庝綘鐨勬儏鎰熸不鎰堝皬瀹囧畽',
       gradient: [Color(0xFFFF6B8A), Color(0xFFFF8FAB)],
     ),
     _OnboardingPageData(
-      icon: '💝',
-      title: '恋爱技巧全攻略',
-      subtitle: 'AI助手帮你搞定每一次心动时刻',
+      icon: '馃挐',
+      title: '鎭嬬埍鎶€宸у叏鏀荤暐',
+      subtitle: 'AI鍔╂墜甯綘鎼炲畾姣忎竴娆″績鍔ㄦ椂鍒?,
       gradient: [Color(0xFFFF4D6D), Color(0xFFFF6B8A)],
     ),
     _OnboardingPageData(
-      icon: '🌱',
-      title: '失恋也能重新开始',
-      subtitle: '21天治愈计划，陪你慢慢走出来',
+      icon: '馃尡',
+      title: '澶辨亱涔熻兘閲嶆柊寮€濮?,
+      subtitle: '21澶╂不鎰堣鍒掞紝闄綘鎱㈡參璧板嚭鏉?,
       gradient: [Color(0xFFFF8FAB), Color(0xFFFFB3C6)],
     ),
     _OnboardingPageData(
-      icon: '🛡️',
-      title: '守护你的健康与边界',
-      subtitle: '莓盾守护，让爱更安全',
+      icon: '馃洝锔?,
+      title: '瀹堟姢浣犵殑鍋ュ悍涓庤竟鐣?,
+      subtitle: '鑾撶浘瀹堟姢锛岃鐖辨洿瀹夊叏',
       gradient: [Color(0xFFC9184A), Color(0xFFE55A7A)],
     ),
     _OnboardingPageData(
-      icon: '🌟',
-      title: '找到你的莓友星球',
-      subtitle: '志同道合的朋友就在这里等你',
+      icon: '馃専',
+      title: '鎵惧埌浣犵殑鑾撳弸鏄熺悆',
+      subtitle: '蹇楀悓閬撳悎鐨勬湅鍙嬪氨鍦ㄨ繖閲岀瓑浣?,
       gradient: [Color(0xFFFF6B8A), Color(0xFFFF4D6D)],
     ),
   ];
@@ -608,15 +599,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return Scaffold(
       body: Stack(
         children: [
-          // 页面内容
+          // 椤甸潰鍐呭
           PageView.builder(
             controller: _pageController,
             onPageChanged: _onPageChanged,
             itemCount: _pages.length,
             itemBuilder: (context, index) => _OnboardingPage(data: _pages[index]),
           ),
-          // 底部控制区
-          Positioned(
+          // 搴曢儴鎺у埗鍖?          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
@@ -635,17 +625,16 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // 页面指示器
-                  _PageIndicator(
+                  // 椤甸潰鎸囩ず鍣?                  _PageIndicator(
                     count: _pages.length,
                     currentIndex: _currentPage,
                   ),
                   const SizedBox(height: 24),
-                  // 按钮
+                  // 鎸夐挳
                   _GradientButton(
                     onPressed: _nextPage,
                     child: Text(
-                      _currentPage < _pages.length - 1 ? '下一步' : '开始体验 🍓',
+                      _currentPage < _pages.length - 1 ? '涓嬩竴姝? : '寮€濮嬩綋楠?馃崜',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -653,13 +642,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       ),
                     ),
                   ),
-                  // 跳过按钮
+                  // 璺宠繃鎸夐挳
                   if (_currentPage < _pages.length - 1) ...[
                     const SizedBox(height: 12),
                     TextButton(
                       onPressed: () => _showLoginSheet(context),
                       child: const Text(
-                        '跳过',
+                        '璺宠繃',
                         style: TextStyle(color: Colors.white70),
                       ),
                     ),
@@ -674,8 +663,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   }
 }
 
-// 引导页数据模型
-class _OnboardingPageData {
+// 寮曞椤垫暟鎹ā鍨?class _OnboardingPageData {
   final String icon;
   final String title;
   final String subtitle;
@@ -689,8 +677,7 @@ class _OnboardingPageData {
   });
 }
 
-// 引导页单个页面
-class _OnboardingPage extends StatelessWidget {
+// 寮曞椤靛崟涓〉闈?class _OnboardingPage extends StatelessWidget {
   final _OnboardingPageData data;
 
   const _OnboardingPage({required this.data});
@@ -711,8 +698,7 @@ class _OnboardingPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 图标（带动画效果）
-              TweenAnimationBuilder<double>(
+              // 鍥炬爣锛堝甫鍔ㄧ敾鏁堟灉锛?              TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0.8, end: 1.0),
                 duration: const Duration(milliseconds: 600),
                 curve: Curves.elasticOut,
@@ -722,7 +708,7 @@ class _OnboardingPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-              // 标题
+              // 鏍囬
               Text(
                 data.title,
                 style: const TextStyle(
@@ -734,8 +720,7 @@ class _OnboardingPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              // 副标题
-              Text(
+              // 鍓爣棰?              Text(
                 data.subtitle,
                 style: TextStyle(
                   fontSize: 16,
@@ -752,8 +737,7 @@ class _OnboardingPage extends StatelessWidget {
   }
 }
 
-// 页面指示器
-class _PageIndicator extends StatelessWidget {
+// 椤甸潰鎸囩ず鍣?class _PageIndicator extends StatelessWidget {
   final int count;
   final int currentIndex;
 
@@ -783,7 +767,7 @@ class _PageIndicator extends StatelessWidget {
   }
 }
 
-// 渐变按钮组件
+// 娓愬彉鎸夐挳缁勪欢
 class _GradientButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
@@ -817,7 +801,7 @@ class _GradientButton extends StatelessWidget {
   }
 }
 
-// ==================== 登录弹窗 ====================
+// ==================== 鐧诲綍寮圭獥 ====================
 class LoginBottomSheet extends StatefulWidget {
   const LoginBottomSheet({super.key});
 
@@ -844,7 +828,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
 
   void _handleLogin() {
     final name = _nameController.text.trim();
-    _globalState.login(name.isNotEmpty ? name : '莓莓用户');
+    _globalState.login(name.isNotEmpty ? name : '鑾撹帗鐢ㄦ埛');
     Navigator.of(context).pop();
   }
 
@@ -866,8 +850,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 拖动条
-            Center(
+            // 鎷栧姩鏉?            Center(
               child: Container(
                 width: 40,
                 height: 4,
@@ -878,14 +861,13 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
               ),
             ),
             const SizedBox(height: 20),
-            // Logo和标题
-            Center(
+            // Logo鍜屾爣棰?            Center(
               child: Column(
                 children: [
-                  const Text('🍓', style: TextStyle(fontSize: 48)),
+                  const Text('馃崜', style: TextStyle(fontSize: 48)),
                   const SizedBox(height: 8),
                   Text(
-                    '想了莓',
+                    '鎯充簡鑾?,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -894,61 +876,61 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    _isRegister ? '创建你的莓莓账号' : '欢迎回来，莓莓人！',
+                    _isRegister ? '鍒涘缓浣犵殑鑾撹帗璐﹀彿' : '娆㈣繋鍥炴潵锛岃帗鑾撲汉锛?,
                     style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 28),
-            // 昵称输入（注册模式）
+            // 鏄电О杈撳叆锛堟敞鍐屾ā寮忥級
             if (_isRegister) ...[
               _buildTextField(
                 controller: _nameController,
                 focusNode: _focusNode1,
-                label: '昵称',
-                hint: '给自己起个可爱的名字 🍓',
+                label: '鏄电О',
+                hint: '缁欒嚜宸辫捣涓彲鐖辩殑鍚嶅瓧 馃崜',
                 prefixIcon: Icons.person_outline,
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
             ],
-            // 手机号/邮箱输入
+            // 鎵嬫満鍙?閭杈撳叆
             _buildTextField(
               controller: _phoneController,
               focusNode: _focusNode2,
-              label: '手机号 / 邮箱',
-              hint: '请输入账号',
+              label: '鎵嬫満鍙?/ 閭',
+              hint: '璇疯緭鍏ヨ处鍙?,
               prefixIcon: Icons.phone_android_outlined,
               textInputAction: TextInputAction.done,
               onSubmitted: (_) => _handleLogin(),
             ),
             const SizedBox(height: 24),
-            // 登录/注册按钮
+            // 鐧诲綍/娉ㄥ唽鎸夐挳
             SizedBox(
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
                 onPressed: _handleLogin,
                 child: Text(
-                  _isRegister ? '注册并开始 🍓' : '登录',
+                  _isRegister ? '娉ㄥ唽骞跺紑濮?馃崜' : '鐧诲綍',
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             const SizedBox(height: 16),
-            // 切换注册/登录
+            // 鍒囨崲娉ㄥ唽/鐧诲綍
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  _isRegister ? '已有账号？' : '还没有账号？',
+                  _isRegister ? '宸叉湁璐﹀彿锛? : '杩樻病鏈夎处鍙凤紵',
                   style: const TextStyle(color: AppTheme.textSecondary),
                 ),
                 TextButton(
                   onPressed: () => setState(() => _isRegister = !_isRegister),
                   child: Text(
-                    _isRegister ? '直接登录' : '立即注册',
+                    _isRegister ? '鐩存帴鐧诲綍' : '绔嬪嵆娉ㄥ唽',
                     style: const TextStyle(
                       color: AppTheme.primary,
                       fontWeight: FontWeight.bold,
@@ -958,16 +940,16 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
               ],
             ),
             const SizedBox(height: 8),
-            // 微信快捷登录
+            // 寰俊蹇嵎鐧诲綍
             Center(
               child: OutlinedButton.icon(
                 onPressed: () {
-                  _globalState.login('微信用户');
+                  _globalState.login('寰俊鐢ㄦ埛');
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(Icons.chat_bubble_outline, color: Color(0xFF07C160)),
                 label: const Text(
-                  '微信快捷登录',
+                  '寰俊蹇嵎鐧诲綍',
                   style: TextStyle(color: Color(0xFF07C160)),
                 ),
               ),
@@ -1001,7 +983,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
   }
 }
 
-// ==================== 主界面（底部导航） ====================
+// ==================== 涓荤晫闈紙搴曢儴瀵艰埅锛?====================
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -1066,7 +1048,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 }
 
-// 安卓优化的底部导航栏
+// 瀹夊崜浼樺寲鐨勫簳閮ㄥ鑸爮
 class _AndroidBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -1098,35 +1080,35 @@ class _AndroidBottomNav extends StatelessWidget {
               _NavItem(
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home,
-                label: '首页',
+                label: '棣栭〉',
                 isSelected: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
                 icon: Icons.favorite_border,
                 activeIcon: Icons.favorite,
-                label: '莓好攻略',
+                label: '鑾撳ソ鏀荤暐',
                 isSelected: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
                 icon: Icons.eco_outlined,
                 activeIcon: Icons.eco,
-                label: '莓完待续',
+                label: '鑾撳畬寰呯画',
                 isSelected: currentIndex == 2,
                 onTap: () => onTap(2),
               ),
               _NavItem(
                 icon: Icons.public_outlined,
                 activeIcon: Icons.public,
-                label: '莓友星球',
+                label: '鑾撳弸鏄熺悆',
                 isSelected: currentIndex == 3,
                 onTap: () => onTap(3),
               ),
               _NavItem(
                 icon: Icons.person_outline,
                 activeIcon: Icons.person,
-                label: '我的',
+                label: '鎴戠殑',
                 isSelected: currentIndex == 4,
                 onTap: () => onTap(4),
               ),
@@ -1189,7 +1171,7 @@ class _NavItem extends StatelessWidget {
   }
 }
 
-// ==================== 首页 Tab ====================
+// ==================== 棣栭〉 Tab ====================
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
@@ -1207,8 +1189,7 @@ class HomeTab extends StatelessWidget {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           slivers: [
-            // 顶部应用栏
-            SliverAppBar(
+            // 椤堕儴搴旂敤鏍?            SliverAppBar(
               pinned: true,
               expandedHeight: 130,
               backgroundColor: AppTheme.primary,
@@ -1231,7 +1212,7 @@ class HomeTab extends StatelessWidget {
                           ListenableBuilder(
                             listenable: _globalState,
                             builder: (_, __) => Text(
-                              '你好，${_globalState.username} ${_globalState.currentMood}',
+                              '浣犲ソ锛?{_globalState.username} ${_globalState.currentMood}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -1241,7 +1222,7 @@ class HomeTab extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           const Text(
-                            '今天也要元气满满哦～',
+                            '浠婂ぉ涔熻鍏冩皵婊℃弧鍝︼綖',
                             style: TextStyle(color: Colors.white70, fontSize: 14),
                           ),
                         ],
@@ -1253,33 +1234,33 @@ class HomeTab extends StatelessWidget {
               title: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('🍓', style: TextStyle(fontSize: 24)),
+                  Text('馃崜', style: TextStyle(fontSize: 24)),
                   SizedBox(width: 8),
-                  Text('想了莓'),
+                  Text('鎯充簡鑾?),
                 ],
               ),
             ),
-            // 内容区域
+            // 鍐呭鍖哄煙
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  // 莓籽卡片
+                  // 鑾撶苯鍗＄墖
                   ListenableBuilder(
                     listenable: _globalState,
                     builder: (_, __) => const _SeedsCard(),
                   ),
                   const SizedBox(height: 16),
-                  // 今日心情
+                  // 浠婃棩蹇冩儏
                   const _MoodSelector(),
                   const SizedBox(height: 20),
-                  // 核心功能标题
-                  const _SectionTitle(title: '核心功能', icon: Icons.grid_view_rounded),
+                  // 鏍稿績鍔熻兘鏍囬
+                  const _SectionTitle(title: '鏍稿績鍔熻兘', icon: Icons.grid_view_rounded),
                   const SizedBox(height: 12),
-                  // 功能网格
+                  // 鍔熻兘缃戞牸
                   _FunctionGrid(),
                   const SizedBox(height: 20),
-                  // 莓盾守护
+                  // 鑾撶浘瀹堟姢
                   _ShieldCard(),
                   const SizedBox(height: 100),
                 ]),
@@ -1292,7 +1273,7 @@ class HomeTab extends StatelessWidget {
   }
 }
 
-// 区块标题组件
+// 鍖哄潡鏍囬缁勪欢
 class _SectionTitle extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -1318,7 +1299,7 @@ class _SectionTitle extends StatelessWidget {
   }
 }
 
-// 莓籽卡片
+// 鑾撶苯鍗＄墖
 class _SeedsCard extends StatelessWidget {
   const _SeedsCard();
 
@@ -1336,18 +1317,18 @@ class _SeedsCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Text('🍓', style: TextStyle(fontSize: 48)),
+            const Text('馃崜', style: TextStyle(fontSize: 48)),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    '我的莓籽',
+                    '鎴戠殑鑾撶苯',
                     style: TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                   Text(
-                    '${_globalState.meiSeeds} 粒',
+                    '${_globalState.meiSeeds} 绮?,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -1364,7 +1345,7 @@ class _SeedsCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                '治愈第 ${_globalState.healingDay} 天',
+                '娌绘剤绗?${_globalState.healingDay} 澶?,
                 style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
               ),
             ),
@@ -1375,11 +1356,10 @@ class _SeedsCard extends StatelessWidget {
   }
 }
 
-// 心情选择器
-class _MoodSelector extends StatelessWidget {
+// 蹇冩儏閫夋嫨鍣?class _MoodSelector extends StatelessWidget {
   const _MoodSelector();
 
-  static const _moods = ['🍓', '😊', '😢', '😡', '🌸', '💪', '🥰', '😴'];
+  static const _moods = ['馃崜', '馃槉', '馃槩', '馃槨', '馃尭', '馃挭', '馃グ', '馃槾'];
 
   @override
   Widget build(BuildContext context) {
@@ -1392,7 +1372,7 @@ class _MoodSelector extends StatelessWidget {
             Row(
               children: [
                 const Text(
-                  '今日心情',
+                  '浠婃棩蹇冩儏',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -1438,15 +1418,15 @@ class _MoodSelector extends StatelessWidget {
   }
 }
 
-// 功能网格
+// 鍔熻兘缃戞牸
 class _FunctionGrid extends StatelessWidget {
   _FunctionGrid();
 
   final List<_FunctionItem> _items = const [
-    _FunctionItem(icon: Icons.favorite, label: '莓好攻略', color: Color(0xFFFFE0E6), tab: 1),
-    _FunctionItem(icon: Icons.eco, label: '莓完待续', color: Color(0xFFE8F5E9), tab: 2),
-    _FunctionItem(icon: Icons.public, label: '莓友星球', color: Color(0xFFE3F2FD), tab: 3),
-    _FunctionItem(icon: Icons.person, label: '我的', color: Color(0xFFFCE4EC), tab: 4),
+    _FunctionItem(icon: Icons.favorite, label: '鑾撳ソ鏀荤暐', color: Color(0xFFFFE0E6), tab: 1),
+    _FunctionItem(icon: Icons.eco, label: '鑾撳畬寰呯画', color: Color(0xFFE8F5E9), tab: 2),
+    _FunctionItem(icon: Icons.public, label: '鑾撳弸鏄熺悆', color: Color(0xFFE3F2FD), tab: 3),
+    _FunctionItem(icon: Icons.person, label: '鎴戠殑', color: Color(0xFFFCE4EC), tab: 4),
   ];
 
   @override
@@ -1516,7 +1496,7 @@ class _FunctionItem extends StatelessWidget {
   }
 }
 
-// 莓盾守护卡片
+// 鑾撶浘瀹堟姢鍗＄墖
 class _ShieldCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -1542,14 +1522,14 @@ class _ShieldCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Text('🛡️', style: TextStyle(fontSize: 40)),
+            const Text('馃洝锔?, style: TextStyle(fontSize: 40)),
             const SizedBox(width: 16),
             const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '莓盾守护',
+                    '鑾撶浘瀹堟姢',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -1558,7 +1538,7 @@ class _ShieldCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    '了解亲密边界与健康知识 →',
+                    '浜嗚В浜插瘑杈圭晫涓庡仴搴风煡璇?鈫?,
                     style: TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                 ],
@@ -1579,7 +1559,7 @@ class _ShieldCard extends StatelessWidget {
   }
 }
 
-// ==================== 莓好攻略 Tab ====================
+// ==================== 鑾撳ソ鏀荤暐 Tab ====================
 class MeiHaoGongLueTab extends StatelessWidget {
   const MeiHaoGongLueTab({super.key});
 
@@ -1588,7 +1568,7 @@ class MeiHaoGongLueTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('💝 莓好攻略'),
+        title: const Text('馃挐 鑾撳ソ鏀荤暐'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -1602,7 +1582,7 @@ class MeiHaoGongLueTab extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    '🍓 ${_globalState.meiSeeds}',
+                    '馃崜 ${_globalState.meiSeeds}',
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -1615,19 +1595,18 @@ class MeiHaoGongLueTab extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: const [
-          // AI 对话练习 - 主推
+          // AI 瀵硅瘽缁冧範 - 涓绘帹
           _AICard(),
           SizedBox(height: 20),
-          // 场景攻略
-          _SectionTitle(title: '场景化技巧', icon: Icons.grid_view_rounded),
+          // 鍦烘櫙鏀荤暐
+          _SectionTitle(title: '鍦烘櫙鍖栨妧宸?, icon: Icons.grid_view_rounded),
           SizedBox(height: 12),
           _ScenarioGrid(),
           SizedBox(height: 20),
-          // 恋爱测试
+          // 鎭嬬埍娴嬭瘯
           _TestCard(),
           SizedBox(height: 12),
-          // 案例库
-          _CaseLibraryLinkCard(),
+          // 妗堜緥搴?          _CaseLibraryLinkCard(),
           SizedBox(height: 100),
         ],
       ),
@@ -1635,7 +1614,7 @@ class MeiHaoGongLueTab extends StatelessWidget {
   }
 }
 
-// AI卡片
+// AI鍗＄墖
 class _AICard extends StatelessWidget {
   const _AICard();
 
@@ -1666,10 +1645,10 @@ class _AICard extends StatelessWidget {
           children: [
             const Row(
               children: [
-                Text('🤖', style: TextStyle(fontSize: 36)),
+                Text('馃', style: TextStyle(fontSize: 36)),
                 SizedBox(width: 12),
                 Text(
-                  'AI 对话练习',
+                  'AI 瀵硅瘽缁冧範',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -1680,7 +1659,7 @@ class _AICard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
-              '"对方说在干嘛，我该怎么回？" 告诉AI你的困惑，获得高情商建议',
+              '"瀵规柟璇村湪骞插槢锛屾垜璇ユ€庝箞鍥烇紵" 鍛婅瘔AI浣犵殑鍥版儜锛岃幏寰楅珮鎯呭晢寤鸿',
               style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
             ),
             const SizedBox(height: 20),
@@ -1694,7 +1673,7 @@ class _AICard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '开始练习 →',
+                    '寮€濮嬬粌涔?鈫?,
                     style: TextStyle(
                       color: AppTheme.primary,
                       fontWeight: FontWeight.bold,
@@ -1711,15 +1690,15 @@ class _AICard extends StatelessWidget {
   }
 }
 
-// 场景网格
+// 鍦烘櫙缃戞牸
 class _ScenarioGrid extends StatelessWidget {
   const _ScenarioGrid();
 
   final List<_Scenario> _scenarios = const [
-    _Scenario(icon: '☕', title: '初次约会', desc: '如何让Ta记住你'),
-    _Scenario(icon: '💬', title: '暧昧升温', desc: '把暧昧变成确认'),
-    _Scenario(icon: '💌', title: '表白技巧', desc: '成功率最高的方式'),
-    _Scenario(icon: '🌙', title: '挽回方法', desc: '理性地重新开始'),
+    _Scenario(icon: '鈽?, title: '鍒濇绾︿細', desc: '濡備綍璁㏕a璁颁綇浣?),
+    _Scenario(icon: '馃挰', title: '鏆ф槯鍗囨俯', desc: '鎶婃毀鏄у彉鎴愮‘璁?),
+    _Scenario(icon: '馃拰', title: '琛ㄧ櫧鎶€宸?, desc: '鎴愬姛鐜囨渶楂樼殑鏂瑰紡'),
+    _Scenario(icon: '馃寵', title: '鎸藉洖鏂规硶', desc: '鐞嗘€у湴閲嶆柊寮€濮?),
   ];
 
   @override
@@ -1802,7 +1781,7 @@ class _ScenarioCard extends StatelessWidget {
   }
 }
 
-// 测试卡片
+// 娴嬭瘯鍗＄墖
 class _TestCard extends StatelessWidget {
   const _TestCard();
 
@@ -1813,15 +1792,14 @@ class _TestCard extends StatelessWidget {
         context,
         MaterialPageRoute(builder: (_) => const LoveTestScreen()),
       ),
-      icon: '🧠',
-      title: '恋爱性格测试',
-      subtitle: '了解你的恋爱风格，获取个性化建议',
+      icon: '馃',
+      title: '鎭嬬埍鎬ф牸娴嬭瘯',
+      subtitle: '浜嗚В浣犵殑鎭嬬埍椋庢牸锛岃幏鍙栦釜鎬у寲寤鸿',
     );
   }
 }
 
-// 案例库入口卡片
-class _CaseLibraryLinkCard extends StatelessWidget {
+// 妗堜緥搴撳叆鍙ｅ崱鐗?class _CaseLibraryLinkCard extends StatelessWidget {
   const _CaseLibraryLinkCard();
 
   @override
@@ -1831,14 +1809,14 @@ class _CaseLibraryLinkCard extends StatelessWidget {
         context,
         MaterialPageRoute(builder: (_) => const CaseLibraryScreen()),
       ),
-      icon: '📚',
-      title: '真实案例库',
-      subtitle: '匿名故事 + 专家解析，从别人的经历中学习',
+      icon: '馃摎',
+      title: '鐪熷疄妗堜緥搴?,
+      subtitle: '鍖垮悕鏁呬簨 + 涓撳瑙ｆ瀽锛屼粠鍒汉鐨勭粡鍘嗕腑瀛︿範',
     );
   }
 }
 
-// 列表卡片通用组件
+// 鍒楄〃鍗＄墖閫氱敤缁勪欢
 class _ListCard extends StatelessWidget {
   final VoidCallback onTap;
   final String icon;
@@ -1895,7 +1873,7 @@ class _ListCard extends StatelessWidget {
   }
 }
 
-// ==================== AI 对话练习界面 ====================
+// ==================== AI 瀵硅瘽缁冧範鐣岄潰 ====================
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});
 
@@ -1910,17 +1888,17 @@ class _AIChatScreenState extends State<AIChatScreen> {
   bool _isThinking = false;
 
   final List<String> _quickQuestions = [
-    '对方说"在干嘛"，我怎么回？',
-    '喜欢的人不主动，怎么办？',
-    '约会结束后如何发消息？',
-    '如何自然地告白？',
+    '瀵规柟璇?鍦ㄥ共鍢?锛屾垜鎬庝箞鍥烇紵',
+    '鍠滄鐨勪汉涓嶄富鍔紝鎬庝箞鍔烇紵',
+    '绾︿細缁撴潫鍚庡浣曞彂娑堟伅锛?,
+    '濡備綍鑷劧鍦板憡鐧斤紵',
   ];
 
   final List<String> _aiResponses = const [
-    '根据对方说"在干嘛"的场景，建议你这样回复：\n\n💡 方案A（活泼型）：\n"刚刚在想你呀～你呢？"\n\n💡 方案B（神秘型）：\n"在做一件很重要的事，猜猜是什么？"\n\n💡 方案C（自然型）：\n"刷到一个很好玩的视频！分享给你～"\n\n⚠️ 温馨提示：以上建议仅供参考，请结合对方性格和你们的关系实际判断。',
-    '面对喜欢的人不主动的情况：\n\n🌸 先观察Ta是否对所有人都不主动（性格原因 vs 对你不感兴趣）\n\n✨ 建议：适当主动释放信号，比如找共同话题、偶尔主动约好友一起出行。\n\n💝 记住：主动不代表掉价，真诚的表达最有魅力！\n\n⚠️ 温馨提示：感情需要双向奔赴，请保护好自己的情绪。',
-    '约会结束后的最佳发消息时机：\n\n⏰ 到家后 30 分钟内：发一条轻松的消息\n"到家了！今天很开心，下次还想一起～"\n\n🚫 避免：立刻疯狂发消息、深夜轰炸\n✅ 推荐：简短真诚，给对方留有空间\n\n⚠️ 温馨提示：每段关系的节奏都不同，以上仅供参考。',
-    '自然告白的几种方式：\n\n💌 方式一（创意型）：\n借助一个小礼物或特别的场景自然引出\n\n🗣️ 方式二（直接型）：\n"我喜欢你，想和你在一起"\n——简单直接，成功率最高\n\n🎭 方式三（试探型）：\n"如果有人喜欢你，你会怎么样？"\n\n⚠️ 温馨提示：无论结果如何，勇敢表达都是值得肯定的！',
+    '鏍规嵁瀵规柟璇?鍦ㄥ共鍢?鐨勫満鏅紝寤鸿浣犺繖鏍峰洖澶嶏細\n\n馃挕 鏂规A锛堟椿娉煎瀷锛夛細\n"鍒氬垰鍦ㄦ兂浣犲憖锝炰綘鍛紵"\n\n馃挕 鏂规B锛堢绉樺瀷锛夛細\n"鍦ㄥ仛涓€浠跺緢閲嶈鐨勪簨锛岀寽鐚滄槸浠€涔堬紵"\n\n馃挕 鏂规C锛堣嚜鐒跺瀷锛夛細\n"鍒峰埌涓€涓緢濂界帺鐨勮棰戯紒鍒嗕韩缁欎綘锝?\n\n鈿狅笍 娓╅Θ鎻愮ず锛氫互涓婂缓璁粎渚涘弬鑰冿紝璇风粨鍚堝鏂规€ф牸鍜屼綘浠殑鍏崇郴瀹為檯鍒ゆ柇銆?,
+    '闈㈠鍠滄鐨勪汉涓嶄富鍔ㄧ殑鎯呭喌锛歕n\n馃尭 鍏堣瀵烼a鏄惁瀵规墍鏈変汉閮戒笉涓诲姩锛堟€ф牸鍘熷洜 vs 瀵逛綘涓嶆劅鍏磋叮锛塡n\n鉁?寤鸿锛氶€傚綋涓诲姩閲婃斁淇″彿锛屾瘮濡傛壘鍏卞悓璇濋銆佸伓灏斾富鍔ㄧ害濂藉弸涓€璧峰嚭琛屻€俓n\n馃挐 璁颁綇锛氫富鍔ㄤ笉浠ｈ〃鎺変环锛岀湡璇氱殑琛ㄨ揪鏈€鏈夐瓍鍔涳紒\n\n鈿狅笍 娓╅Θ鎻愮ず锛氭劅鎯呴渶瑕佸弻鍚戝璧达紝璇蜂繚鎶ゅソ鑷繁鐨勬儏缁€?,
+    '绾︿細缁撴潫鍚庣殑鏈€浣冲彂娑堟伅鏃舵満锛歕n\n鈴?鍒板鍚?30 鍒嗛挓鍐咃細鍙戜竴鏉¤交鏉剧殑娑堟伅\n"鍒板浜嗭紒浠婂ぉ寰堝紑蹇冿紝涓嬫杩樻兂涓€璧凤綖"\n\n馃毇 閬垮厤锛氱珛鍒荤柉鐙傚彂娑堟伅銆佹繁澶滆桨鐐竆n鉁?鎺ㄨ崘锛氱畝鐭湡璇氾紝缁欏鏂圭暀鏈夌┖闂碶n\n鈿狅笍 娓╅Θ鎻愮ず锛氭瘡娈靛叧绯荤殑鑺傚閮戒笉鍚岋紝浠ヤ笂浠呬緵鍙傝€冦€?,
+    '鑷劧鍛婄櫧鐨勫嚑绉嶆柟寮忥細\n\n馃拰 鏂瑰紡涓€锛堝垱鎰忓瀷锛夛細\n鍊熷姪涓€涓皬绀肩墿鎴栫壒鍒殑鍦烘櫙鑷劧寮曞嚭\n\n馃棧锔?鏂瑰紡浜岋紙鐩存帴鍨嬶級锛歕n"鎴戝枩娆綘锛屾兂鍜屼綘鍦ㄤ竴璧?\n鈥斺€旂畝鍗曠洿鎺ワ紝鎴愬姛鐜囨渶楂榎n\n馃幁 鏂瑰紡涓夛紙璇曟帰鍨嬶級锛歕n"濡傛灉鏈変汉鍠滄浣狅紝浣犱細鎬庝箞鏍凤紵"\n\n鈿狅笍 娓╅Θ鎻愮ず锛氭棤璁虹粨鏋滃浣曪紝鍕囨暍琛ㄨ揪閮芥槸鍊煎緱鑲畾鐨勶紒',
   ];
 
   @override
@@ -1969,7 +1947,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🤖 AI 恋爱助手'),
+        title: const Text('馃 AI 鎭嬬埍鍔╂墜'),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -1979,25 +1957,24 @@ class _AIChatScreenState extends State<AIChatScreen> {
       ),
       body: Column(
         children: [
-          // 免责声明
+          // 鍏嶈矗澹版槑
           Container(
             width: double.infinity,
             color: const Color(0xFFFFF3CD),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: const Text(
-              '⚠️ AI建议仅供参考，请结合实际情况判断',
+              '鈿狅笍 AI寤鸿浠呬緵鍙傝€冿紝璇风粨鍚堝疄闄呮儏鍐靛垽鏂?,
               style: TextStyle(fontSize: 12, color: Color(0xFF856404)),
               textAlign: TextAlign.center,
             ),
           ),
-          // 聊天内容
+          // 鑱婂ぉ鍐呭
           Expanded(
             child: _messages.isEmpty
                 ? _buildQuickQuestions()
                 : _buildChatList(),
           ),
-          // 输入框
-          _buildInputBar(),
+          // 杈撳叆妗?          _buildInputBar(),
         ],
       ),
     );
@@ -2011,7 +1988,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '常见问题快捷提问：',
+            '甯歌闂蹇嵎鎻愰棶锛?,
             style: TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 14,
@@ -2072,7 +2049,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
             child: TextField(
               controller: _inputController,
               decoration: InputDecoration(
-                hintText: '输入你的情感困惑...',
+                hintText: '杈撳叆浣犵殑鎯呮劅鍥版儜...',
                 filled: true,
                 fillColor: AppTheme.background,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -2107,18 +2084,18 @@ class _AIChatScreenState extends State<AIChatScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('⚠️ 免责声明'),
+        title: const Text('鈿狅笍 鍏嶈矗澹版槑'),
         content: const Text(
-          '1. AI助手提供的建议仅供参考\n'
-          '2. 不能替代专业的心理咨询\n'
-          '3. 请结合实际情况和直觉判断\n'
-          '4. 保护好自己的隐私和安全\n\n'
-          '如有严重心理困扰，请寻求专业帮助。',
+          '1. AI鍔╂墜鎻愪緵鐨勫缓璁粎渚涘弬鑰僜n'
+          '2. 涓嶈兘鏇夸唬涓撲笟鐨勫績鐞嗗挩璇n'
+          '3. 璇风粨鍚堝疄闄呮儏鍐靛拰鐩磋鍒ゆ柇\n'
+          '4. 淇濇姢濂借嚜宸辩殑闅愮鍜屽畨鍏╘n\n'
+          '濡傛湁涓ラ噸蹇冪悊鍥版壈锛岃瀵绘眰涓撲笟甯姪銆?,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('我知道了'),
+            child: const Text('鎴戠煡閬撲簡'),
           ),
         ],
       ),
@@ -2241,7 +2218,7 @@ class _ThinkingBubble extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              'AI思考中...',
+              'AI鎬濊€冧腑...',
               style: TextStyle(color: AppTheme.textSecondary),
             ),
           ],
@@ -2251,7 +2228,7 @@ class _ThinkingBubble extends StatelessWidget {
   }
 }
 
-// ==================== 场景详情界面 ====================
+// ==================== 鍦烘櫙璇︽儏鐣岄潰 ====================
 class ScenarioDetailScreen extends StatelessWidget {
   final String title;
   final String icon;
@@ -2291,16 +2268,16 @@ class ScenarioDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           const Text(
-            '💡 核心技巧',
+            '馃挕 鏍稿績鎶€宸?,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          _buildTipCard('1', '保持真诚，不要刻意表演'),
-          _buildTipCard('2', '关注对方的反应，随机应变'),
-          _buildTipCard('3', '不要急于求成，给彼此时间'),
+          _buildTipCard('1', '淇濇寔鐪熻瘹锛屼笉瑕佸埢鎰忚〃婕?),
+          _buildTipCard('2', '鍏虫敞瀵规柟鐨勫弽搴旓紝闅忔満搴斿彉'),
+          _buildTipCard('3', '涓嶈鎬ヤ簬姹傛垚锛岀粰褰兼鏃堕棿'),
           const SizedBox(height: 24),
           const Text(
-            '📝 实战话术',
+            '馃摑 瀹炴垬璇濇湳',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
@@ -2310,10 +2287,10 @@ class ScenarioDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text('💬 推荐开场白：', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('馃挰 鎺ㄨ崘寮€鍦虹櫧锛?, style: TextStyle(fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Text(
-                    '"今天发现一家很棒的咖啡店，想不想一起去试试？"',
+                    '"浠婂ぉ鍙戠幇涓€瀹跺緢妫掔殑鍜栧暋搴楋紝鎯充笉鎯充竴璧峰幓璇曡瘯锛?',
                     style: TextStyle(fontSize: 15, height: 1.6),
                   ),
                 ],
@@ -2363,7 +2340,7 @@ class ScenarioDetailScreen extends StatelessWidget {
   }
 }
 
-// ==================== 恋爱测试界面 ====================
+// ==================== 鎭嬬埍娴嬭瘯鐣岄潰 ====================
 class LoveTestScreen extends StatefulWidget {
   const LoveTestScreen({super.key});
 
@@ -2379,43 +2356,43 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
 
   final List<Map<String, dynamic>> _questions = const [
     {
-      'q': '恋爱中你更倾向于？',
-      'options': ['主动表达感情', '等对方先开口', '随缘，顺其自然', '用行动代替言语'],
+      'q': '鎭嬬埍涓綘鏇村€惧悜浜庯紵',
+      'options': ['涓诲姩琛ㄨ揪鎰熸儏', '绛夊鏂瑰厛寮€鍙?, '闅忕紭锛岄『鍏惰嚜鐒?, '鐢ㄨ鍔ㄤ唬鏇胯█璇?],
     },
     {
-      'q': '约会时你会提前多久做准备？',
-      'options': ['提前几天精心准备', '当天临时决定', '提前一天想想就好', '几乎不准备，随意最好'],
+      'q': '绾︿細鏃朵綘浼氭彁鍓嶅涔呭仛鍑嗗锛?,
+      'options': ['鎻愬墠鍑犲ぉ绮惧績鍑嗗', '褰撳ぉ涓存椂鍐冲畾', '鎻愬墠涓€澶╂兂鎯冲氨濂?, '鍑犱箮涓嶅噯澶囷紝闅忔剰鏈€濂?],
     },
     {
-      'q': '当和对方产生矛盾时，你会？',
-      'options': ['立刻沟通解决', '先冷静一段时间', '等对方先道歉', '假装没事，忽略问题'],
+      'q': '褰撳拰瀵规柟浜х敓鐭涚浘鏃讹紝浣犱細锛?,
+      'options': ['绔嬪埢娌熼€氳В鍐?, '鍏堝喎闈欎竴娈垫椂闂?, '绛夊鏂瑰厛閬撴瓑', '鍋囪娌′簨锛屽拷鐣ラ棶棰?],
     },
     {
-      'q': '你认为理想的恋爱节奏是？',
-      'options': ['快速确认关系', '慢慢了解，自然发展', '先成为好朋友再说', '感觉对了就马上行动'],
+      'q': '浣犺涓虹悊鎯崇殑鎭嬬埍鑺傚鏄紵',
+      'options': ['蹇€熺‘璁ゅ叧绯?, '鎱㈡參浜嗚В锛岃嚜鐒跺彂灞?, '鍏堟垚涓哄ソ鏈嬪弸鍐嶈', '鎰熻瀵逛簡灏遍┈涓婅鍔?],
     },
   ];
 
   final Map<String, Map<String, String>> _results = {
-    '主动热情型': {
-      'icon': '🔥',
-      'desc': '你热情奔放，敢于表达，是恋爱中的主动方。你的优势是让对方感到被重视，但要注意不要给对方太大压力。',
-      'tip': '建议：适当给对方留一些空间和神秘感，会让关系更持久。',
+    '涓诲姩鐑儏鍨?: {
+      'icon': '馃敟',
+      'desc': '浣犵儹鎯呭鏀撅紝鏁簬琛ㄨ揪锛屾槸鎭嬬埍涓殑涓诲姩鏂广€備綘鐨勪紭鍔挎槸璁╁鏂规劅鍒拌閲嶈锛屼絾瑕佹敞鎰忎笉瑕佺粰瀵规柟澶ぇ鍘嬪姏銆?,
+      'tip': '寤鸿锛氶€傚綋缁欏鏂圭暀涓€浜涚┖闂村拰绁炵鎰燂紝浼氳鍏崇郴鏇存寔涔呫€?,
     },
-    '理性稳重型': {
-      'icon': '🧊',
-      'desc': '你理性而稳重，在感情中比较谨慎。你会认真分析关系，不轻易冲动。',
-      'tip': '建议：适当放开心扉，勇于表达情感，让对方感受到你的温度。',
+    '鐞嗘€хǔ閲嶅瀷': {
+      'icon': '馃',
+      'desc': '浣犵悊鎬ц€岀ǔ閲嶏紝鍦ㄦ劅鎯呬腑姣旇緝璋ㄦ厧銆備綘浼氳鐪熷垎鏋愬叧绯伙紝涓嶈交鏄撳啿鍔ㄣ€?,
+      'tip': '寤鸿锛氶€傚綋鏀惧紑蹇冩墘锛屽媷浜庤〃杈炬儏鎰燂紝璁╁鏂规劅鍙楀埌浣犵殑娓╁害銆?,
     },
-    '浪漫感性型': {
-      'icon': '🌸',
-      'desc': '你对感情充满浪漫幻想，擅长营造氛围。你的感染力很强，能带给对方幸福感。',
-      'tip': '建议：在浪漫之余，也要脚踏实地地经营日常关系。',
+    '娴极鎰熸€у瀷': {
+      'icon': '馃尭',
+      'desc': '浣犲鎰熸儏鍏呮弧娴极骞绘兂锛屾搮闀胯惀閫犳皼鍥淬€備綘鐨勬劅鏌撳姏寰堝己锛岃兘甯︾粰瀵规柟骞哥鎰熴€?,
+      'tip': '寤鸿锛氬湪娴极涔嬩綑锛屼篃瑕佽剼韪忓疄鍦板湴缁忚惀鏃ュ父鍏崇郴銆?,
     },
-    '随缘自在型': {
-      'icon': '🌊',
-      'desc': '你在感情中顺其自然，不强求。这种态度能减少很多焦虑，但也可能错过机会。',
-      'tip': '建议：在对的时机，尝试主动迈出第一步，不要让缘分溜走。',
+    '闅忕紭鑷湪鍨?: {
+      'icon': '馃寠',
+      'desc': '浣犲湪鎰熸儏涓『鍏惰嚜鐒讹紝涓嶅己姹傘€傝繖绉嶆€佸害鑳藉噺灏戝緢澶氱劍铏戯紝浣嗕篃鍙兘閿欒繃鏈轰細銆?,
+      'tip': '寤鸿锛氬湪瀵圭殑鏃舵満锛屽皾璇曚富鍔ㄨ繄鍑虹涓€姝ワ紝涓嶈璁╃紭鍒嗘簻璧般€?,
     },
   };
 
@@ -2431,7 +2408,7 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
   }
 
   void _calculateResult() {
-    final types = ['主动热情型', '理性稳重型', '浪漫感性型', '随缘自在型'];
+    final types = ['涓诲姩鐑儏鍨?, '鐞嗘€хǔ閲嶅瀷', '娴极鎰熸€у瀷', '闅忕紭鑷湪鍨?];
     final dominantType = types[_answers.isNotEmpty ? _answers[0] % types.length : 0];
     setState(() {
       _resultType = dominantType;
@@ -2445,18 +2422,18 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
 
     final q = _questions[_currentQ];
     return Scaffold(
-      appBar: AppBar(title: const Text('🧠 恋爱性格测试')),
+      appBar: AppBar(title: const Text('馃 鎭嬬埍鎬ф牸娴嬭瘯')),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 进度
+            // 杩涘害
             Row(
               children: [
                 Text(
-                  '问题 ${_currentQ + 1}/${_questions.length}',
+                  '闂 ${_currentQ + 1}/${_questions.length}',
                   style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
                 ),
                 const Spacer(),
@@ -2475,7 +2452,7 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            // 问题卡片
+            // 闂鍗＄墖
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -2495,7 +2472,7 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            // 选项
+            // 閫夐」
             ...List.generate((q['options'] as List).length, (i) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -2515,13 +2492,13 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
   Widget _buildResultPage() {
     final result = _results[_resultType]!;
     return Scaffold(
-      appBar: AppBar(title: const Text('你的恋爱性格报告')),
+      appBar: AppBar(title: const Text('浣犵殑鎭嬬埍鎬ф牸鎶ュ憡')),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // 结果卡片
+            // 缁撴灉鍗＄墖
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(28),
@@ -2547,7 +2524,7 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            // 分析卡片
+            // 鍒嗘瀽鍗＄墖
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -2555,7 +2532,7 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      '性格分析',
+                      '鎬ф牸鍒嗘瀽',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -2594,17 +2571,17 @@ class _LoveTestScreenState extends State<LoveTestScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            // 保存按钮
+            // 淇濆瓨鎸夐挳
             ElevatedButton.icon(
               onPressed: () {
                 _globalState.addMeiSeeds(20);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('🍓 获得 20 粒莓籽！报告已保存')),
+                  const SnackBar(content: Text('馃崜 鑾峰緱 20 绮掕帗绫斤紒鎶ュ憡宸蹭繚瀛?)),
                 );
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.save_alt),
-              label: const Text('保存报告 (+20莓籽)'),
+              label: const Text('淇濆瓨鎶ュ憡 (+20鑾撶苯)'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 52),
               ),
@@ -2682,41 +2659,41 @@ class _OptionButton extends StatelessWidget {
   }
 }
 
-// ==================== 案例库界面 ====================
+// ==================== 妗堜緥搴撶晫闈?====================
 class CaseLibraryScreen extends StatelessWidget {
   const CaseLibraryScreen({super.key});
 
   static const _cases = [
     {
-      'title': '异地恋三年，如何维持感情温度？',
-      'tag': '异地恋',
-      'summary': '匿名用户 @草莓想念你 分享了自己维持三年异地恋的心得...',
-      'analysis': '专家解析：异地恋的核心是"仪式感"与"信任感"的双重建立。',
+      'title': '寮傚湴鎭嬩笁骞达紝濡備綍缁存寔鎰熸儏娓╁害锛?,
+      'tag': '寮傚湴鎭?,
+      'summary': '鍖垮悕鐢ㄦ埛 @鑽夎帗鎯冲康浣?鍒嗕韩浜嗚嚜宸辩淮鎸佷笁骞村紓鍦版亱鐨勫績寰?..',
+      'analysis': '涓撳瑙ｆ瀽锛氬紓鍦版亱鐨勬牳蹇冩槸"浠紡鎰?涓?淇′换鎰?鐨勫弻閲嶅缓绔嬨€?,
     },
     {
-      'title': '暗恋了两年，该说还是不说？',
-      'tag': '暗恋',
-      'summary': '匿名用户 @小草莓要勇敢 的故事告诉我们，暗恋的代价...',
-      'analysis': '专家解析：暗恋的最大风险是时间成本，建议适时表达。',
+      'title': '鏆楁亱浜嗕袱骞达紝璇ヨ杩樻槸涓嶈锛?,
+      'tag': '鏆楁亱',
+      'summary': '鍖垮悕鐢ㄦ埛 @灏忚崏鑾撹鍕囨暍 鐨勬晠浜嬪憡璇夋垜浠紝鏆楁亱鐨勪唬浠?..',
+      'analysis': '涓撳瑙ｆ瀽锛氭殫鎭嬬殑鏈€澶ч闄╂槸鏃堕棿鎴愭湰锛屽缓璁€傛椂琛ㄨ揪銆?,
     },
     {
-      'title': '被分手后如何正视自己的价值？',
-      'tag': '失恋',
-      'summary': '@莓莓加油 用亲身经历证明，失恋后的成长往往超出想象...',
-      'analysis': '专家解析：失恋是一次重新认识自己的机会，关键在于归因方式。',
+      'title': '琚垎鎵嬪悗濡備綍姝ｈ鑷繁鐨勪环鍊硷紵',
+      'tag': '澶辨亱',
+      'summary': '@鑾撹帗鍔犳补 鐢ㄤ翰韬粡鍘嗚瘉鏄庯紝澶辨亱鍚庣殑鎴愰暱寰€寰€瓒呭嚭鎯宠薄...',
+      'analysis': '涓撳瑙ｆ瀽锛氬け鎭嬫槸涓€娆￠噸鏂拌璇嗚嚜宸辩殑鏈轰細锛屽叧閿湪浜庡綊鍥犳柟寮忋€?,
     },
     {
-      'title': '怎么看出对方是否真的喜欢你？',
-      'tag': '辨别感情',
-      'summary': '汇总了100个真实案例后，这10个信号值得关注...',
-      'analysis': '专家解析：行动比语言更能说明问题，观察日常细节。',
+      'title': '鎬庝箞鐪嬪嚭瀵规柟鏄惁鐪熺殑鍠滄浣狅紵',
+      'tag': '杈ㄥ埆鎰熸儏',
+      'summary': '姹囨€讳簡100涓湡瀹炴渚嬪悗锛岃繖10涓俊鍙峰€煎緱鍏虫敞...',
+      'analysis': '涓撳瑙ｆ瀽锛氳鍔ㄦ瘮璇█鏇磋兘璇存槑闂锛岃瀵熸棩甯哥粏鑺傘€?,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('📚 真实案例库')),
+      appBar: AppBar(title: const Text('馃摎 鐪熷疄妗堜緥搴?)),
       body: ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
@@ -2807,8 +2784,7 @@ class _CaseDetailSheet extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 拖动条
-          Center(
+          // 鎷栧姩鏉?          Center(
             child: Container(
               width: 40,
               height: 4,
@@ -2819,7 +2795,7 @@ class _CaseDetailSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          // 标签
+          // 鏍囩
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -2832,7 +2808,7 @@ class _CaseDetailSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          // 标题
+          // 鏍囬
           Text(
             caseData['title']!,
             style: const TextStyle(
@@ -2842,23 +2818,23 @@ class _CaseDetailSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          // 内容
+          // 鍐呭
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    '📖 故事正文',
+                    '馃摉 鏁呬簨姝ｆ枃',
                     style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${caseData['summary']}\n\n（完整故事内容…这里展示案例详情，保护隐私已做匿名处理）',
+                    '${caseData['summary']}\n\n锛堝畬鏁存晠浜嬪唴瀹光€﹁繖閲屽睍绀烘渚嬭鎯咃紝淇濇姢闅愮宸插仛鍖垮悕澶勭悊锛?,
                     style: const TextStyle(fontSize: 14, height: 1.7, color: AppTheme.textPrimary),
                   ),
                   const SizedBox(height: 20),
-                  // 专家解析
+                  // 涓撳瑙ｆ瀽
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
@@ -2871,7 +2847,7 @@ class _CaseDetailSheet extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          '🔬 专家解析',
+                          '馃敩 涓撳瑙ｆ瀽',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: AppTheme.primary,
@@ -2900,7 +2876,7 @@ class _CaseDetailSheet extends StatelessWidget {
   }
 }
 
-// ==================== 莓完待续 Tab ====================
+// ==================== 鑾撳畬寰呯画 Tab ====================
 class MeiWanDaiXuTab extends StatelessWidget {
   const MeiWanDaiXuTab({super.key});
 
@@ -2909,7 +2885,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('🌱 莓完待续'),
+        title: const Text('馃尡 鑾撳畬寰呯画'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -2923,7 +2899,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    '第${_globalState.healingDay}天',
+                    '绗?{_globalState.healingDay}澶?,
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -2940,7 +2916,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
         backgroundColor: AppTheme.primary,
         icon: const Icon(Icons.edit, color: Colors.white),
         label: const Text(
-          '写草莓日记',
+          '鍐欒崏鑾撴棩璁?,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
@@ -2948,22 +2924,22 @@ class MeiWanDaiXuTab extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: [
-          // 情绪曲线
+          // 鎯呯华鏇茬嚎
           ListenableBuilder(
             listenable: _globalState,
             builder: (_, __) => _buildMoodCurve(),
           ),
           const SizedBox(height: 16),
-          // 治愈计划
+          // 娌绘剤璁″垝
           ListenableBuilder(
             listenable: _globalState,
             builder: (_, __) => _buildHealingPlan(context),
           ),
           const SizedBox(height: 16),
-          // 疗愈工具
+          // 鐤楁剤宸ュ叿
           _buildHealingTools(context),
           const SizedBox(height: 16),
-          // 专业帮助
+          // 涓撲笟甯姪
           _buildProfessionalHelp(context),
           const SizedBox(height: 100),
         ],
@@ -2982,7 +2958,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  '📊 情绪曲线',
+                  '馃搳 鎯呯华鏇茬嚎',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -2990,7 +2966,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '共记录 ${_globalState.diaries.length} 篇',
+                  '鍏辫褰?${_globalState.diaries.length} 绡?,
                   style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                 ),
               ],
@@ -3002,10 +2978,10 @@ class MeiWanDaiXuTab extends StatelessWidget {
                   padding: EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      Text('🍓', style: TextStyle(fontSize: 48)),
+                      Text('馃崜', style: TextStyle(fontSize: 48)),
                       SizedBox(height: 12),
                       Text(
-                        '还没有记录～\n点击右下角"写草莓日记"开始吧',
+                        '杩樻病鏈夎褰曪綖\n鐐瑰嚮鍙充笅瑙?鍐欒崏鑾撴棩璁?寮€濮嬪惂',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppTheme.textSecondary,
@@ -3073,7 +3049,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  '🌱 21天治愈计划',
+                  '馃尡 21澶╂不鎰堣鍒?,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -3119,7 +3095,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    '今日任务',
+                    '浠婃棩浠诲姟',
                     style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
                   ),
                   const SizedBox(height: 6),
@@ -3141,11 +3117,11 @@ class MeiWanDaiXuTab extends StatelessWidget {
                 onPressed: () {
                   _globalState.completePunch();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('🍓 打卡成功！获得 15 粒莓籽！')),
+                    const SnackBar(content: Text('馃崜 鎵撳崱鎴愬姛锛佽幏寰?15 绮掕帗绫斤紒')),
                   );
                 },
                 icon: const Icon(Icons.check_circle_outline),
-                label: const Text('打卡完成 (+15莓籽)'),
+                label: const Text('鎵撳崱瀹屾垚 (+15鑾撶苯)'),
               ),
             ),
           ],
@@ -3156,26 +3132,26 @@ class MeiWanDaiXuTab extends StatelessWidget {
 
   String _getDayTask(int day) {
     final tasks = [
-      '整理一件旧物并拍照记录',
-      '给自己写一封信，说出三个优点',
-      '学一首新歌，哼给自己听',
-      '出门散步20分钟，感受阳光',
-      '尝试做一道从未做过的菜',
-      '联系一位许久未联系的朋友',
-      '整理你的手机相册，保留美好',
-      '写下5件让你感恩的事',
-      '尝试一项新的兴趣爱好',
-      '看一部让你开心的电影',
-      '制定下个月的一个小目标',
-      '为自己买一件小礼物',
-      '冥想10分钟，专注呼吸',
-      '和家人打一个温暖的电话',
-      '记录今天所有美好的瞬间',
-      '尝试运动或瑜伽30分钟',
-      '重新布置你的房间一角',
-      '阅读一篇鼓励自己的文章',
-      '和朋友分享一个快乐故事',
-      '为完成这段旅程奖励自己',
+      '鏁寸悊涓€浠舵棫鐗╁苟鎷嶇収璁板綍',
+      '缁欒嚜宸卞啓涓€灏佷俊锛岃鍑轰笁涓紭鐐?,
+      '瀛︿竴棣栨柊姝岋紝鍝肩粰鑷繁鍚?,
+      '鍑洪棬鏁ｆ20鍒嗛挓锛屾劅鍙楅槼鍏?,
+      '灏濊瘯鍋氫竴閬撲粠鏈仛杩囩殑鑿?,
+      '鑱旂郴涓€浣嶈涔呮湭鑱旂郴鐨勬湅鍙?,
+      '鏁寸悊浣犵殑鎵嬫満鐩稿唽锛屼繚鐣欑編濂?,
+      '鍐欎笅5浠惰浣犳劅鎭╃殑浜?,
+      '灏濊瘯涓€椤规柊鐨勫叴瓒ｇ埍濂?,
+      '鐪嬩竴閮ㄨ浣犲紑蹇冪殑鐢靛奖',
+      '鍒跺畾涓嬩釜鏈堢殑涓€涓皬鐩爣',
+      '涓鸿嚜宸变拱涓€浠跺皬绀肩墿',
+      '鍐ユ兂10鍒嗛挓锛屼笓娉ㄥ懠鍚?,
+      '鍜屽浜烘墦涓€涓俯鏆栫殑鐢佃瘽',
+      '璁板綍浠婂ぉ鎵€鏈夌編濂界殑鐬棿',
+      '灏濊瘯杩愬姩鎴栫憸浼?0鍒嗛挓',
+      '閲嶆柊甯冪疆浣犵殑鎴块棿涓€瑙?,
+      '闃呰涓€绡囬紦鍔辫嚜宸辩殑鏂囩珷',
+      '鍜屾湅鍙嬪垎浜竴涓揩涔愭晠浜?,
+      '涓哄畬鎴愯繖娈垫梾绋嬪鍔辫嚜宸?,
     ];
     return tasks[min(day, tasks.length - 1)];
   }
@@ -3184,24 +3160,24 @@ class MeiWanDaiXuTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _SectionTitle(title: '🧰 疗愈工具包', icon: Icons.build_outlined),
+        const _SectionTitle(title: '馃О 鐤楁剤宸ュ叿鍖?, icon: Icons.build_outlined),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
               child: _ToolCard(
-                icon: '🎵',
-                title: '白噪音冥想',
-                subtitle: '草莓主题ASMR',
+                icon: '馃幍',
+                title: '鐧藉櫔闊冲啣鎯?,
+                subtitle: '鑽夎帗涓婚ASMR',
                 onTap: () => _showASMRSheet(context),
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: _ToolCard(
-                icon: '🌳',
-                title: '虚拟树洞',
-                subtitle: '匿名倾诉',
+                icon: '馃尦',
+                title: '铏氭嫙鏍戞礊',
+                subtitle: '鍖垮悕鍊捐瘔',
                 onTap: () => _showTreeHoleSheet(context),
               ),
             ),
@@ -3224,21 +3200,21 @@ class MeiWanDaiXuTab extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            const Text('🎵', style: TextStyle(fontSize: 48)),
+            const Text('馃幍', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 16),
             const Text(
-              '白噪音冥想',
+              '鐧藉櫔闊冲啣鎯?,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
-              '功能开发中，敬请期待...',
+              '鍔熻兘寮€鍙戜腑锛屾暚璇锋湡寰?..',
               style: TextStyle(color: AppTheme.textSecondary),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('关闭'),
+              child: const Text('鍏抽棴'),
             ),
           ],
         ),
@@ -3260,22 +3236,22 @@ class MeiWanDaiXuTab extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            const Text('🌳', style: TextStyle(fontSize: 48)),
+            const Text('馃尦', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 16),
             const Text(
-              '虚拟树洞',
+              '铏氭嫙鏍戞礊',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
-              '在这里，你可以匿名倾诉...\n功能开发中，敬请期待...',
+              '鍦ㄨ繖閲岋紝浣犲彲浠ュ尶鍚嶅€捐瘔...\n鍔熻兘寮€鍙戜腑锛屾暚璇锋湡寰?..',
               textAlign: TextAlign.center,
               style: TextStyle(color: AppTheme.textSecondary),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('关闭'),
+              child: const Text('鍏抽棴'),
             ),
           ],
         ),
@@ -3301,7 +3277,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                 color: AppTheme.primary.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Text('👩‍⚕️', style: TextStyle(fontSize: 28)),
+              child: const Text('馃懇鈥嶁殨锔?, style: TextStyle(fontSize: 28)),
             ),
             const SizedBox(width: 16),
             const Expanded(
@@ -3309,7 +3285,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '联系专业咨询师',
+                    '鑱旂郴涓撲笟鍜ㄨ甯?,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -3317,7 +3293,7 @@ class MeiWanDaiXuTab extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '专业心理咨询，付费预约',
+                    '涓撲笟蹇冪悊鍜ㄨ锛屼粯璐归绾?,
                     style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
                   ),
                 ],
@@ -3334,20 +3310,20 @@ class MeiWanDaiXuTab extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('👩‍⚕️ 专业咨询'),
+        title: const Text('馃懇鈥嶁殨锔?涓撲笟鍜ㄨ'),
         content: const Text(
-          '专业心理咨询服务\n\n'
-          '• 一对一情感咨询\n'
-          '• 心理状态评估\n'
-          '• 个性化治愈方案\n\n'
-          '📞 咨询方式：在线视频/语音\n'
-          '💰 费用：根据咨询师而定\n\n'
-          '功能开发中，敬请期待...',
+          '涓撲笟蹇冪悊鍜ㄨ鏈嶅姟\n\n'
+          '鈥?涓€瀵逛竴鎯呮劅鍜ㄨ\n'
+          '鈥?蹇冪悊鐘舵€佽瘎浼癨n'
+          '鈥?涓€у寲娌绘剤鏂规\n\n'
+          '馃摓 鍜ㄨ鏂瑰紡锛氬湪绾胯棰?璇煶\n'
+          '馃挵 璐圭敤锛氭牴鎹挩璇㈠笀鑰屽畾\n\n'
+          '鍔熻兘寮€鍙戜腑锛屾暚璇锋湡寰?..',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('关闭'),
+            child: const Text('鍏抽棴'),
           ),
         ],
       ),
@@ -3410,7 +3386,7 @@ class _ToolCard extends StatelessWidget {
   }
 }
 
-// ==================== 写日记界面 ====================
+// ==================== 鍐欐棩璁扮晫闈?====================
 class WriteDiaryScreen extends StatefulWidget {
   const WriteDiaryScreen({super.key});
 
@@ -3420,9 +3396,9 @@ class WriteDiaryScreen extends StatefulWidget {
 
 class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
   final _contentController = TextEditingController();
-  String _selectedMood = '🍓';
+  String _selectedMood = '馃崜';
 
-  final _moods = ['🍓', '😊', '😢', '😡', '🌸', '💪', '🥰', '😴'];
+  final _moods = ['馃崜', '馃槉', '馃槩', '馃槨', '馃尭', '馃挭', '馃グ', '馃槾'];
 
   @override
   void dispose() {
@@ -3433,7 +3409,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
   void _submit() {
     if (_contentController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('请写下你的心情...')),
+        const SnackBar(content: Text('璇峰啓涓嬩綘鐨勫績鎯?..')),
       );
       return;
     }
@@ -3441,11 +3417,11 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
       mood: _selectedMood,
       content: _contentController.text.trim(),
       time: DateTime.now(),
-      aiAdvice: '记录是一种很好的自我疗愈方式～',
+      aiAdvice: '璁板綍鏄竴绉嶅緢濂界殑鑷垜鐤楁剤鏂瑰紡锝?,
     ));
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('🍓 日记已保存，获得 5 粒莓籽！')),
+      const SnackBar(content: Text('馃崜 鏃ヨ宸蹭繚瀛橈紝鑾峰緱 5 绮掕帗绫斤紒')),
     );
   }
 
@@ -3453,12 +3429,12 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🍓 写草莓日记'),
+        title: const Text('馃崜 鍐欒崏鑾撴棩璁?),
         actions: [
           TextButton(
             onPressed: _submit,
             child: const Text(
-              '保存',
+              '淇濆瓨',
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
@@ -3470,7 +3446,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              '今天的心情',
+              '浠婂ぉ鐨勫績鎯?,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -3499,7 +3475,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
             ),
             const SizedBox(height: 24),
             const Text(
-              '写下你的故事',
+              '鍐欎笅浣犵殑鏁呬簨',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -3511,7 +3487,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
               controller: _contentController,
               maxLines: 10,
               decoration: InputDecoration(
-                hintText: '今天发生了什么让你开心/难过的事情？\n把心事写下来吧...',
+                hintText: '浠婂ぉ鍙戠敓浜嗕粈涔堣浣犲紑蹇?闅捐繃鐨勪簨鎯咃紵\n鎶婂績浜嬪啓涓嬫潵鍚?..',
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -3526,7 +3502,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
               child: ElevatedButton.icon(
                 onPressed: _submit,
                 icon: const Icon(Icons.save),
-                label: const Text('保存日记 (+5莓籽)'),
+                label: const Text('淇濆瓨鏃ヨ (+5鑾撶苯)'),
               ),
             ),
           ],
@@ -3536,7 +3512,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
   }
 }
 
-// ==================== 莓友星球 Tab ====================
+// ==================== 鑾撳弸鏄熺悆 Tab ====================
 class MeiYouXingQiuTab extends StatelessWidget {
   const MeiYouXingQiuTab({super.key});
 
@@ -3544,21 +3520,20 @@ class MeiYouXingQiuTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(title: const Text('🌍 莓友星球')),
+      appBar: AppBar(title: const Text('馃實 鑾撳弸鏄熺悆')),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: const [
-          // 星球介绍
+          // 鏄熺悆浠嬬粛
           _PlanetIntro(),
           SizedBox(height: 20),
-          // 话题广场
-          _SectionTitle(title: '🔥 热门话题', icon: Icons.local_fire_department),
+          // 璇濋骞垮満
+          _SectionTitle(title: '馃敟 鐑棬璇濋', icon: Icons.local_fire_department),
           SizedBox(height: 12),
           _TopicList(),
           SizedBox(height: 20),
-          // 莓友圈入口
-          _SectionTitle(title: '👥 莓友圈', icon: Icons.group),
+          // 鑾撳弸鍦堝叆鍙?          _SectionTitle(title: '馃懃 鑾撳弸鍦?, icon: Icons.group),
           SizedBox(height: 12),
           _CommunityList(),
           SizedBox(height: 100),
@@ -3583,10 +3558,10 @@ class _PlanetIntro extends StatelessWidget {
       ),
       child: const Column(
         children: [
-          Text('🌍', style: TextStyle(fontSize: 56)),
+          Text('馃實', style: TextStyle(fontSize: 56)),
           SizedBox(height: 12),
           Text(
-            '莓友星球',
+            '鑾撳弸鏄熺悆',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -3595,7 +3570,7 @@ class _PlanetIntro extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Text(
-            '在这里遇见志同道合的朋友\n一起成长，相互治愈',
+            '鍦ㄨ繖閲岄亣瑙佸織鍚岄亾鍚堢殑鏈嬪弸\n涓€璧锋垚闀匡紝鐩镐簰娌绘剤',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
           ),
@@ -3609,10 +3584,10 @@ class _TopicList extends StatelessWidget {
   const _TopicList();
 
   final List<Map<String, String>> _topics = const [
-    {'icon': '💕', 'title': '#今天的治愈小事', 'count': '2.3万'},
-    {'icon': '🌟', 'title': '#前任教会我的事', 'count': '1.8万'},
-    {'icon': '💪', 'title': '#分手后的蜕变', 'count': '1.5万'},
-    {'icon': '🎯', 'title': '#追爱路上的故事', 'count': '1.2万'},
+    {'icon': '馃挄', 'title': '#浠婂ぉ鐨勬不鎰堝皬浜?, 'count': '2.3涓?},
+    {'icon': '馃専', 'title': '#鍓嶄换鏁欎細鎴戠殑浜?, 'count': '1.8涓?},
+    {'icon': '馃挭', 'title': '#鍒嗘墜鍚庣殑铚曞彉', 'count': '1.5涓?},
+    {'icon': '馃幆', 'title': '#杩界埍璺笂鐨勬晠浜?, 'count': '1.2涓?},
   ];
 
   @override
@@ -3644,7 +3619,7 @@ class _TopicList extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${t['count']}人参与',
+                      '${t['count']}浜哄弬涓?,
                       style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                     ),
                   ],
@@ -3663,10 +3638,10 @@ class _CommunityList extends StatelessWidget {
   const _CommunityList();
 
   final List<Map<String, String>> _groups = const [
-    {'icon': '🌸', 'name': '失恋互助群', 'member': '328人'},
-    {'icon': '💝', 'name': '恋爱成长社', 'member': '512人'},
-    {'icon': '🌙', 'name': '深夜树洞', 'member': '256人'},
-    {'icon': '☀️', 'name': '正向能量圈', 'member': '189人'},
+    {'icon': '馃尭', 'name': '澶辨亱浜掑姪缇?, 'member': '328浜?},
+    {'icon': '馃挐', 'name': '鎭嬬埍鎴愰暱绀?, 'member': '512浜?},
+    {'icon': '馃寵', 'name': '娣卞鏍戞礊', 'member': '256浜?},
+    {'icon': '鈽€锔?, 'name': '姝ｅ悜鑳介噺鍦?, 'member': '189浜?},
   ];
 
   @override
@@ -3715,10 +3690,10 @@ class _CommunityList extends StatelessWidget {
                 onPressed: () {
                   _globalState.joinGroup(g['name']!);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('🍓 已加入${g['name']}！')),
+                    SnackBar(content: Text('馃崜 宸插姞鍏?{g['name']}锛?)),
                   );
                 },
-                child: const Text('加入'),
+                child: const Text('鍔犲叆'),
               ),
             ],
           ),
@@ -3728,7 +3703,7 @@ class _CommunityList extends StatelessWidget {
   }
 }
 
-// ==================== 我的 Tab ====================
+// ==================== 鎴戠殑 Tab ====================
 class MyTab extends StatelessWidget {
   const MyTab({super.key});
 
@@ -3737,7 +3712,7 @@ class MyTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: const Text('👤 我的'),
+        title: const Text('馃懁 鎴戠殑'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings_outlined),
@@ -3752,28 +3727,28 @@ class MyTab extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: [
-          // 用户信息卡片
+          // 鐢ㄦ埛淇℃伅鍗＄墖
           ListenableBuilder(
             listenable: _globalState,
             builder: (_, __) => _buildProfileCard(),
           ),
           const SizedBox(height: 20),
-          // 草莓农场
+          // 鑽夎帗鍐滃満
           ListenableBuilder(
             listenable: _globalState,
             builder: (_, __) => _buildFarmCard(),
           ),
           const SizedBox(height: 20),
-          // 成就
+          // 鎴愬氨
           ListenableBuilder(
             listenable: _globalState,
             builder: (_, __) => _buildAchievementsCard(),
           ),
           const SizedBox(height: 20),
-          // 功能列表
+          // 鍔熻兘鍒楄〃
           _buildMenuList(context),
           const SizedBox(height: 20),
-          // 登出按钮
+          // 鐧诲嚭鎸夐挳
           _buildLogoutButton(context),
           const SizedBox(height: 100),
         ],
@@ -3801,7 +3776,7 @@ class MyTab extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: const Center(
-              child: Text('🍓', style: TextStyle(fontSize: 36)),
+              child: Text('馃崜', style: TextStyle(fontSize: 36)),
             ),
           ),
           const SizedBox(width: 16),
@@ -3819,7 +3794,7 @@ class MyTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${_globalState.currentMood} 治愈第${_globalState.healingDay}天',
+                  '${_globalState.currentMood} 娌绘剤绗?{_globalState.healingDay}澶?,
                   style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
               ],
@@ -3838,7 +3813,7 @@ class MyTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              '🍓 草莓农场',
+              '馃崜 鑽夎帗鍐滃満',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -3850,25 +3825,25 @@ class MyTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _FarmItem(
-                  emoji: '🌱',
-                  label: '草莓苗',
-                  unlocked: _globalState.farmItems['草莓苗']!,
+                  emoji: '馃尡',
+                  label: '鑽夎帗鑻?,
+                  unlocked: _globalState.farmItems['鑽夎帗鑻?]!,
                 ),
                 _FarmItem(
-                  emoji: '🍓',
-                  label: '小草莓',
-                  unlocked: _globalState.farmItems['小草莓']!,
+                  emoji: '馃崜',
+                  label: '灏忚崏鑾?,
+                  unlocked: _globalState.farmItems['灏忚崏鑾?]!,
                 ),
                 _FarmItem(
-                  emoji: '🍓',
-                  label: '大草莓',
-                  unlocked: _globalState.farmItems['大草莓']!,
+                  emoji: '馃崜',
+                  label: '澶ц崏鑾?,
+                  unlocked: _globalState.farmItems['澶ц崏鑾?]!,
                   size: 36,
                 ),
                 _FarmItem(
-                  emoji: '👑🍓',
-                  label: '草莓王',
-                  unlocked: _globalState.farmItems['草莓王']!,
+                  emoji: '馃憫馃崜',
+                  label: '鑽夎帗鐜?,
+                  unlocked: _globalState.farmItems['鑽夎帗鐜?]!,
                   size: 40,
                 ),
               ],
@@ -3881,9 +3856,9 @@ class MyTab extends StatelessWidget {
 
   Widget _buildAchievementsCard() {
     final achievements = [
-      {'icon': '🌟', 'name': '莓籽收集者', 'desc': '获得50粒莓籽', 'unlocked': _globalState.achievements.contains('莓籽收集者')},
-      {'icon': '🏆', 'name': '莓籽大师', 'desc': '获得100粒莓籽', 'unlocked': _globalState.achievements.contains('莓籽大师')},
-      {'icon': '📝', 'name': '日记达人', 'desc': '写满3篇日记', 'unlocked': _globalState.achievements.contains('日记达人')},
+      {'icon': '馃専', 'name': '鑾撶苯鏀堕泦鑰?, 'desc': '鑾峰緱50绮掕帗绫?, 'unlocked': _globalState.achievements.contains('鑾撶苯鏀堕泦鑰?)},
+      {'icon': '馃弳', 'name': '鑾撶苯澶у笀', 'desc': '鑾峰緱100绮掕帗绫?, 'unlocked': _globalState.achievements.contains('鑾撶苯澶у笀')},
+      {'icon': '馃摑', 'name': '鏃ヨ杈句汉', 'desc': '鍐欐弧3绡囨棩璁?, 'unlocked': _globalState.achievements.contains('鏃ヨ杈句汉')},
     ];
     return Card(
       child: Padding(
@@ -3892,7 +3867,7 @@ class MyTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              '🏅 我的成就',
+              '馃弲 鎴戠殑鎴愬氨',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -3945,10 +3920,10 @@ class MyTab extends StatelessWidget {
 
   Widget _buildMenuList(BuildContext context) {
     final menus = [
-      {'icon': Icons.history, 'title': '历史记录', 'color': Colors.blue},
-      {'icon': Icons.bookmark_outline, 'title': '我的收藏', 'color': Colors.orange},
-      {'icon': Icons.notifications_outlined, 'title': '消息通知', 'color': Colors.red},
-      {'icon': Icons.help_outline, 'title': '帮助与反馈', 'color': Colors.purple},
+      {'icon': Icons.history, 'title': '鍘嗗彶璁板綍', 'color': Colors.blue},
+      {'icon': Icons.bookmark_outline, 'title': '鎴戠殑鏀惰棌', 'color': Colors.orange},
+      {'icon': Icons.notifications_outlined, 'title': '娑堟伅閫氱煡', 'color': Colors.red},
+      {'icon': Icons.help_outline, 'title': '甯姪涓庡弽棣?, 'color': Colors.purple},
     ];
     return Card(
       child: Column(
@@ -3963,7 +3938,7 @@ class MyTab extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: AppTheme.textSecondary),
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${m['title']} - 功能开发中')),
+                    SnackBar(content: Text('${m['title']} - 鍔熻兘寮€鍙戜腑')),
                   );
                 },
               ),
@@ -3981,11 +3956,11 @@ class MyTab extends StatelessWidget {
         showDialog(
           context: context,
           builder: (_) => AlertDialog(
-            title: const Text('确定要退出登录吗？'),
+            title: const Text('纭畾瑕侀€€鍑虹櫥褰曞悧锛?),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('取消'),
+                child: const Text('鍙栨秷'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -3993,14 +3968,14 @@ class MyTab extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                child: const Text('确定退出'),
+                child: const Text('纭畾閫€鍑?),
               ),
             ],
           ),
         );
       },
       icon: const Icon(Icons.logout, color: Colors.red),
-      label: const Text('退出登录', style: TextStyle(color: Colors.red)),
+      label: const Text('閫€鍑虹櫥褰?, style: TextStyle(color: Colors.red)),
       style: OutlinedButton.styleFrom(
         side: const BorderSide(color: Colors.red),
         minimumSize: const Size(double.infinity, 48),
@@ -4009,7 +3984,7 @@ class MyTab extends StatelessWidget {
   }
 }
 
-// 农场物品组件
+// 鍐滃満鐗╁搧缁勪欢
 class _FarmItem extends StatelessWidget {
   final String emoji;
   final String label;
@@ -4047,19 +4022,19 @@ class _FarmItem extends StatelessWidget {
   }
 }
 
-// ==================== 莓盾守护界面 ====================
+// ==================== 鑾撶浘瀹堟姢鐣岄潰 ====================
 class MeiDunScreen extends StatelessWidget {
   const MeiDunScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('🛡️ 莓盾守护')),
+      appBar: AppBar(title: const Text('馃洝锔?鑾撶浘瀹堟姢')),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: [
-          // 顶部介绍
+          // 椤堕儴浠嬬粛
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -4070,10 +4045,10 @@ class MeiDunScreen extends StatelessWidget {
             ),
             child: const Column(
               children: [
-                Text('🛡️', style: TextStyle(fontSize: 56)),
+                Text('馃洝锔?, style: TextStyle(fontSize: 56)),
                 SizedBox(height: 12),
                 Text(
-                  '莓盾守护',
+                  '鑾撶浘瀹堟姢',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -4082,30 +4057,30 @@ class MeiDunScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  '了解亲密边界，保护自己',
+                  '浜嗚В浜插瘑杈圭晫锛屼繚鎶よ嚜宸?,
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          // 功能列表
+          // 鍔熻兘鍒楄〃
           _buildFeatureCard(
-            '🚨', '识别危险信号',
-            '学习识别不健康关系的预警信号',
-            ['控制欲过强', '言语贬低', '孤立你与朋友家人', '情绪暴力'],
+            '馃毃', '璇嗗埆鍗遍櫓淇″彿',
+            '瀛︿範璇嗗埆涓嶅仴搴峰叧绯荤殑棰勮淇″彿',
+            ['鎺у埗娆茶繃寮?, '瑷€璇船浣?, '瀛ょ珛浣犱笌鏈嬪弸瀹朵汉', '鎯呯华鏆村姏'],
           ),
           const SizedBox(height: 12),
           _buildFeatureCard(
-            '📋', '健康关系标准',
-            '什么是健康的恋爱关系？',
-            ['相互尊重', '平等沟通', '支持彼此成长', '保持独立空间'],
+            '馃搵', '鍋ュ悍鍏崇郴鏍囧噯',
+            '浠€涔堟槸鍋ュ悍鐨勬亱鐖卞叧绯伙紵',
+            ['鐩镐簰灏婇噸', '骞崇瓑娌熼€?, '鏀寔褰兼鎴愰暱', '淇濇寔鐙珛绌洪棿'],
           ),
           const SizedBox(height: 12),
           _buildFeatureCard(
-            '🆘', '紧急求助',
-            '如遇紧急情况，请寻求帮助',
-            ['报警：110', '心理援助热线：400-161-9995', '妇联热线：12338'],
+            '馃啒', '绱ф€ユ眰鍔?,
+            '濡傞亣绱ф€ユ儏鍐碉紝璇峰姹傚府鍔?,
+            ['鎶ヨ锛?10', '蹇冪悊鎻村姪鐑嚎锛?00-161-9995', '濡囪仈鐑嚎锛?2338'],
           ),
           const SizedBox(height: 100),
         ],
@@ -4171,40 +4146,39 @@ class MeiDunScreen extends StatelessWidget {
   }
 }
 
-// ==================== 设置界面 ====================
+// ==================== 璁剧疆鐣岄潰 ====================
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('⚙️ 设置')),
+      appBar: AppBar(title: const Text('鈿欙笍 璁剧疆')),
       body: ListView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
         children: [
-          // 深色模式和添加到桌面
+          // 娣辫壊妯″紡鍜屾坊鍔犲埌妗岄潰
           Card(
             child: Column(
               children: [
-                // 深色模式
+                // 娣辫壊妯″紡
                 ListenableBuilder(
                   listenable: _globalState,
                   builder: (_, __) => SwitchListTile(
                     secondary: const Icon(Icons.dark_mode_outlined),
-                    title: const Text('深色模式'),
-                    subtitle: const Text('开启后界面将变为深色主题'),
+                    title: const Text('娣辫壊妯″紡'),
+                    subtitle: const Text('寮€鍚悗鐣岄潰灏嗗彉涓烘繁鑹蹭富棰?),
                     value: _globalState.isDarkMode,
                     onChanged: (value) => _globalState.setDarkMode(value),
                     activeColor: AppTheme.primary,
                   ),
                 ),
                 const Divider(height: 1, indent: 56),
-                // 添加到桌面
-                ListTile(
+                // 娣诲姞鍒版闈?                ListTile(
                   leading: const Icon(Icons.add_to_home_screen_outlined),
-                  title: const Text('添加到桌面'),
-                  subtitle: const Text('将应用添加到手机桌面，离线使用'),
+                  title: const Text('娣诲姞鍒版闈?),
+                  subtitle: const Text('灏嗗簲鐢ㄦ坊鍔犲埌鎵嬫満妗岄潰锛岀绾夸娇鐢?),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () => _showInstallGuide(context),
                 ),
@@ -4212,31 +4186,30 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // 通知和其他设置
-          Card(
+          // 閫氱煡鍜屽叾浠栬缃?          Card(
             child: Column(
               children: [
                 ListTile(
                   leading: const Icon(Icons.notifications_outlined),
-                  title: const Text('通知设置'),
+                  title: const Text('閫氱煡璁剧疆'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('功能开发中...')),
+                      const SnackBar(content: Text('鍔熻兘寮€鍙戜腑...')),
                     );
                   },
                 ),
                 const Divider(height: 1, indent: 56),
                 ListTile(
                   leading: const Icon(Icons.privacy_tip_outlined),
-                  title: const Text('隐私政策'),
+                  title: const Text('闅愮鏀跨瓥'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () => _showPrivacyPolicy(context),
                 ),
                 const Divider(height: 1, indent: 56),
                 ListTile(
                   leading: const Icon(Icons.info_outline),
-                  title: const Text('关于我们'),
+                  title: const Text('鍏充簬鎴戜滑'),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: () => _showAboutUs(context),
                 ),
@@ -4244,7 +4217,7 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // 下载桌面应用
+          // 涓嬭浇妗岄潰搴旂敤
           Card(
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -4266,23 +4239,23 @@ class SettingsScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('💻 下载桌面应用', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                            Text('馃捇 涓嬭浇妗岄潰搴旂敤', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                             SizedBox(height: 4),
-                            Text('Windows/Mac/Linux 独立运行', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
+                            Text('Windows/Mac/Linux 鐙珛杩愯', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
                           ],
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text('下载后双击即可运行，无需浏览器，支持横竖屏切换，数据自动同步', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
+                  const Text('涓嬭浇鍚庡弻鍑诲嵆鍙繍琛岋紝鏃犻渶娴忚鍣紝鏀寔妯珫灞忓垏鎹紝鏁版嵁鑷姩鍚屾', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () => _showDesktopDownload(context),
                       icon: const Icon(Icons.download),
-                      label: const Text('一键下载安装包', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      label: const Text('涓€閿笅杞藉畨瑁呭寘', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.primary,
                         foregroundColor: Colors.white,
@@ -4296,16 +4269,16 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // 版本信息
+          // 鐗堟湰淇℃伅
           Card(
             child: ListTile(
               leading: const Icon(Icons.update, color: AppTheme.primary),
-              title: const Text('检查更新'),
-              subtitle: const Text('当前版本 1.0.1'),
+              title: const Text('妫€鏌ユ洿鏂?),
+              subtitle: const Text('褰撳墠鐗堟湰 1.0.1'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('当前已是最新版本！')),
+                  const SnackBar(content: Text('褰撳墠宸叉槸鏈€鏂扮増鏈紒')),
                 );
               },
             ),
@@ -4329,8 +4302,7 @@ class SettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            // 拖动条
-            Container(
+            // 鎷栧姩鏉?            Container(
               width: 40,
               height: 4,
               decoration: BoxDecoration(
@@ -4339,10 +4311,10 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text('📱', style: TextStyle(fontSize: 64)),
+            const Text('馃摫', style: TextStyle(fontSize: 64)),
             const SizedBox(height: 16),
             const Text(
-              '添加到桌面',
+              '娣诲姞鍒版闈?,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -4350,14 +4322,14 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              '让想了莓成为你的专属小程序',
+              '璁╂兂浜嗚帗鎴愪负浣犵殑涓撳睘灏忕▼搴?,
               style: TextStyle(
                 color: AppTheme.textSecondary,
                 fontSize: 14,
               ),
             ),
             const SizedBox(height: 24),
-            // 安装步骤
+            // 瀹夎姝ラ
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -4365,28 +4337,28 @@ class SettingsScreen extends StatelessWidget {
                     _buildStepCard(
                       context,
                       '1',
-                      '📍 打开浏览器菜单',
-                      '点击浏览器右上角的菜单按钮（⋮ 或 •••）',
+                      '馃搷 鎵撳紑娴忚鍣ㄨ彍鍗?,
+                      '鐐瑰嚮娴忚鍣ㄥ彸涓婅鐨勮彍鍗曟寜閽紙鈰?鎴?鈥⑩€⑩€級',
                       Icons.more_vert,
                     ),
                     const SizedBox(height: 12),
                     _buildStepCard(
                       context,
                       '2',
-                      '📲 选择"添加到主屏幕"',
-                      '在菜单中找到"添加到主屏幕"或"安装应用"选项',
+                      '馃摬 閫夋嫨"娣诲姞鍒颁富灞忓箷"',
+                      '鍦ㄨ彍鍗曚腑鎵惧埌"娣诲姞鍒颁富灞忓箷"鎴?瀹夎搴旂敤"閫夐」',
                       Icons.add_to_home_screen,
                     ),
                     const SizedBox(height: 12),
                     _buildStepCard(
                       context,
                       '3',
-                      '✨ 完成添加',
-                      '点击添加后，应用图标就会出现在你的手机桌面上',
+                      '鉁?瀹屾垚娣诲姞',
+                      '鐐瑰嚮娣诲姞鍚庯紝搴旂敤鍥炬爣灏变細鍑虹幇鍦ㄤ綘鐨勬墜鏈烘闈笂',
                       Icons.check_circle_outline,
                     ),
                     const SizedBox(height: 20),
-                    // 特点说明
+                    // 鐗圭偣璇存槑
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -4400,7 +4372,7 @@ class SettingsScreen extends StatelessWidget {
                               Icon(Icons.offline_bolt, color: AppTheme.primary, size: 20),
                               SizedBox(width: 8),
                               Text(
-                                '离线使用',
+                                '绂荤嚎浣跨敤',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: AppTheme.primary,
@@ -4410,8 +4382,8 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '添加后无需打开浏览器，直接从桌面打开即可使用，'
-                            '并支持离线访问部分功能！',
+                            '娣诲姞鍚庢棤闇€鎵撳紑娴忚鍣紝鐩存帴浠庢闈㈡墦寮€鍗冲彲浣跨敤锛?
+                            '骞舵敮鎸佺绾胯闂儴鍒嗗姛鑳斤紒',
                             style: TextStyle(
                               color: Theme.of(context).textTheme.bodyMedium?.color,
                               fontSize: 13,
@@ -4426,13 +4398,13 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // 尝试自动安装按钮
+            // 灏濊瘯鑷姩瀹夎鎸夐挳
             ElevatedButton.icon(
               onPressed: () {
                 _tryInstallPWA(context);
               },
               icon: const Icon(Icons.download),
-              label: const Text('尝试自动安装'),
+              label: const Text('灏濊瘯鑷姩瀹夎'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
               ),
@@ -4509,14 +4481,14 @@ class SettingsScreen extends StatelessWidget {
 
   void _tryInstallPWA(BuildContext context) async {
     try {
-      // 提示用户通过浏览器菜单安装 PWA
+      // 鎻愮ず鐢ㄦ埛閫氳繃娴忚鍣ㄨ彍鍗曞畨瑁?PWA
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('📱 请使用浏览器"添加到主屏幕"功能安装应用'),
+          content: Text('馃摫 璇蜂娇鐢ㄦ祻瑙堝櫒"娣诲姞鍒颁富灞忓箷"鍔熻兘瀹夎搴旂敤'),
           duration: Duration(seconds: 3),
         ),
       );
-      // 展示提示
+      // 灞曠ず鎻愮ず
       if (context.mounted) {
         showDialog(
           context: context,
@@ -4525,27 +4497,27 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 Icon(Icons.info_outline, color: AppTheme.primary),
                 SizedBox(width: 8),
-                Text('提示'),
+                Text('鎻愮ず'),
               ],
             ),
             content: const Text(
-              '由于浏览器安全限制，\n安装应用需要您在弹出的提示中确认。\n\n'
-              '您也可以按照上面的手动步骤添加到桌面。',
+              '鐢变簬娴忚鍣ㄥ畨鍏ㄩ檺鍒讹紝\n瀹夎搴旂敤闇€瑕佹偍鍦ㄥ脊鍑虹殑鎻愮ず涓‘璁ゃ€俓n\n'
+              '鎮ㄤ篃鍙互鎸夌収涓婇潰鐨勬墜鍔ㄦ楠ゆ坊鍔犲埌妗岄潰銆?,
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('知道了'),
+                child: const Text('鐭ラ亾浜?),
               ),
             ],
           ),
         );
       }
     } catch (e) {
-      // 非 Web 环境
+      // 闈?Web 鐜
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('当前环境不支持自动安装：$e')),
+          SnackBar(content: Text('褰撳墠鐜涓嶆敮鎸佽嚜鍔ㄥ畨瑁咃細$e')),
         );
       }
     }
@@ -4555,22 +4527,22 @@ class SettingsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('🔒 隐私政策'),
+        title: const Text('馃敀 闅愮鏀跨瓥'),
         content: const SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '想了莓隐私政策',
+                '鎯充簡鑾撻殣绉佹斂绛?,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               SizedBox(height: 12),
               Text(
-                '1. 数据收集：我们仅收集您主动提供的信息，用于应用功能。\n\n'
-                '2. 数据存储：您的数据存储在本地设备，我们不会上传您的个人信息。\n\n'
-                '3. 第三方服务：我们使用 Netlify 进行应用托管，可能收集有限的访问日志。\n\n'
-                '4. 联系方式：如有问题，请联系我们。',
+                '1. 鏁版嵁鏀堕泦锛氭垜浠粎鏀堕泦鎮ㄤ富鍔ㄦ彁渚涚殑淇℃伅锛岀敤浜庡簲鐢ㄥ姛鑳姐€俓n\n'
+                '2. 鏁版嵁瀛樺偍锛氭偍鐨勬暟鎹瓨鍌ㄥ湪鏈湴璁惧锛屾垜浠笉浼氫笂浼犳偍鐨勪釜浜轰俊鎭€俓n\n'
+                '3. 绗笁鏂规湇鍔★細鎴戜滑浣跨敤 Netlify 杩涜搴旂敤鎵樼锛屽彲鑳芥敹闆嗘湁闄愮殑璁块棶鏃ュ織銆俓n\n'
+                '4. 鑱旂郴鏂瑰紡锛氬鏈夐棶棰橈紝璇疯仈绯绘垜浠€?,
                 style: TextStyle(height: 1.6),
               ),
             ],
@@ -4579,7 +4551,7 @@ class SettingsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('关闭'),
+            child: const Text('鍏抽棴'),
           ),
         ],
       ),
@@ -4592,22 +4564,22 @@ class SettingsScreen extends StatelessWidget {
       builder: (_) => AlertDialog(
         title: const Row(
           children: [
-            Text('🍓', style: TextStyle(fontSize: 28)),
+            Text('馃崜', style: TextStyle(fontSize: 28)),
             SizedBox(width: 8),
-            Text('想了莓'),
+            Text('鎯充簡鑾?),
           ],
         ),
         content: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('版本：1.0.1'),
+            Text('鐗堟湰锛?.0.1'),
             SizedBox(height: 8),
-            Text('一个温暖的情感治愈小宇宙'),
+            Text('涓€涓俯鏆栫殑鎯呮劅娌绘剤灏忓畤瀹?),
             SizedBox(height: 12),
             Text(
-              '💝 恋爱攻略 | 🌱 失恋疗愈 | 🌍 莓友星球\n\n'
-              '用心陪伴，每一天',
+              '馃挐 鎭嬬埍鏀荤暐 | 馃尡 澶辨亱鐤楁剤 | 馃實 鑾撳弸鏄熺悆\n\n'
+              '鐢ㄥ績闄即锛屾瘡涓€澶?,
               style: TextStyle(height: 1.5),
             ),
           ],
@@ -4615,7 +4587,7 @@ class SettingsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('关闭'),
+            child: const Text('鍏抽棴'),
           ),
         ],
       ),
@@ -4638,11 +4610,11 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2))),
             const SizedBox(height: 24),
-            const Text('💻', style: TextStyle(fontSize: 64)),
+            const Text('馃捇', style: TextStyle(fontSize: 64)),
             const SizedBox(height: 16),
-            const Text('下载桌面应用', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text('涓嬭浇妗岄潰搴旂敤', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            const Text('选择你的操作系统', style: TextStyle(color: AppTheme.textSecondary)),
+            const Text('閫夋嫨浣犵殑鎿嶄綔绯荤粺', style: TextStyle(color: AppTheme.textSecondary)),
             const SizedBox(height: 24),
             Expanded(
               child: SingleChildScrollView(
@@ -4678,7 +4650,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             OutlinedButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('取消'),
+              child: const Text('鍙栨秷'),
               style: OutlinedButton.styleFrom(minimumSize: const Size(double.infinity, 46)),
             ),
           ],
@@ -4726,7 +4698,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   void _downloadDesktopApp(BuildContext context, String platform) {
-    // 显示下载提示
+    // 鏄剧ず涓嬭浇鎻愮ず
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -4739,28 +4711,28 @@ class SettingsScreen extends StatelessWidget {
               child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.primary),
             ),
             SizedBox(width: 16),
-            Text('正在准备下载...'),
+            Text('姝ｅ湪鍑嗗涓嬭浇...'),
           ],
         ),
       ),
     );
 
-    // 模拟下载延迟，然后跳转到 Electron 下载页面
+    // 妯℃嫙涓嬭浇寤惰繜锛岀劧鍚庤烦杞埌 Electron 涓嬭浇椤甸潰
     Future.delayed(const Duration(milliseconds: 1500), () {
-      Navigator.pop(context); // 关闭加载弹窗
-      Navigator.pop(context); // 关闭下载选项弹窗
+      Navigator.pop(context); // 鍏抽棴鍔犺浇寮圭獥
+      Navigator.pop(context); // 鍏抽棴涓嬭浇閫夐」寮圭獥
 
-      // 跳转到下载页面
-      final uri = Uri.parse('https://lighthearted-frangipane-fb0fe3.netlify.app/download');
+      // 璺宠浆鍒颁笅杞介〉闈?      final uri = Uri.parse('https://lighthearted-frangipane-fb0fe3.netlify.app/download');
       launchUrl(uri, mode: LaunchMode.externalApplication);
 
-      // 显示成功提示
+      // 鏄剧ず鎴愬姛鎻愮ず
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('💻 即将开始下载桌面应用！'),
+          content: Text('馃捇 鍗冲皢寮€濮嬩笅杞芥闈㈠簲鐢紒'),
           backgroundColor: AppTheme.primary,
                 ),
       );
     });
   }
 }
+
